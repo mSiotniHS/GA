@@ -4,7 +4,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EA", "EA\EA.csproj", "{A36E6E1E-7408-4418-B9D9-A57E109E5FA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSP", "TSP\TSP.csproj", "{B229DBB9-8480-4C39-B36E-6FDBC65AA4D7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Travelling Salesman Problem", "Travelling Salesman Problem\Travelling Salesman Problem.csproj", "{B229DBB9-8480-4C39-B36E-6FDBC65AA4D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{61801F69-00F0-44FA-A4CF-45F4A922B839}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +26,9 @@ Global
 		{B229DBB9-8480-4C39-B36E-6FDBC65AA4D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B229DBB9-8480-4C39-B36E-6FDBC65AA4D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B229DBB9-8480-4C39-B36E-6FDBC65AA4D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61801F69-00F0-44FA-A4CF-45F4A922B839}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61801F69-00F0-44FA-A4CF-45F4A922B839}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61801F69-00F0-44FA-A4CF-45F4A922B839}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61801F69-00F0-44FA-A4CF-45F4A922B839}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

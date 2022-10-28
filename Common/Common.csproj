@@ -5,8 +5,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\EA\EA.csproj" />
-    </ItemGroup>
-
 </Project>
