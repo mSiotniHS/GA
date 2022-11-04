@@ -6,20 +6,20 @@ namespace EA;
 
 public record Genotype
 {
-	private List<Gene> Genes { get; }
-	public int Length => Genes.Count;
+	private int?[] Genes { get; }
+	public int Length => Genes.Length;
 
-	public Genotype(List<Gene> genes)
+	public Genotype(IEnumerable<int?> values)
 	{
-		Genes = genes;
+		Genes = values.ToArray();
 	}
 
-	public Genotype(IEnumerable<int> values)
+	public Genotype(int length)
 	{
-		Genes = values.Select(v => new Gene(v)).ToList();
+		Genes = new int?[length];
 	}
 
-	public Gene this[int idx]
+	public int? this[int idx]
 	{
 		get => Genes[idx];
 		set => Genes[idx] = value;
@@ -30,7 +30,15 @@ public record Genotype
 		var distance = 0;
 		for (var i = 0; i < Length; i++)
 		{
-			distance += Math.Abs(this[i].Value - other[i].Value);
+			var value = this[i];
+			var otherValue = other[i];
+
+			if (value is null || otherValue is null)
+			{
+				throw new Exception("Genotype is not fully defined");
+			}
+
+			distance += Math.Abs(value.Value - otherValue.Value);
 		}
 
 		return distance;
