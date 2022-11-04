@@ -43,4 +43,44 @@ public record Genotype
 
 		return distance;
 	}
+
+	// interval [start, end)
+	public Genotype Copy(int start, int end)
+	{
+		var genes = new List<int?>();
+		for (var i = 0; i < Length; i++)
+		{
+			if (i >= start && i < end)
+			{
+				genes.Add(this[i]);
+			}
+			else
+			{
+				genes.Add(null);
+			}
+		}
+
+		return new Genotype(genes);
+	}
+
+	public bool Contains(int gene)
+	{
+		return ContainsIn(gene, 0, Length);
+	}
+
+	// interval: [start, end)
+	public bool ContainsIn(int gene, int start, int end)
+	{
+		for (var i = start; i < end; i++)
+		{
+			if (this[i] is not null && this[i] == gene)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public override string ToString() => $"({string.Join(", ", Genes)})";
 }
