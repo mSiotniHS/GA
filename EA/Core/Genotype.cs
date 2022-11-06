@@ -19,6 +19,12 @@ public record Genotype
 		Genes = new int?[length];
 	}
 
+	public Genotype(Genotype other)
+	{
+		Genes = new int?[other.Length];
+		Array.Copy(other.Genes, Genes, other.Length);
+	}
+
 	public int? this[int idx]
 	{
 		get => Genes[idx];
