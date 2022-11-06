@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EA;
+namespace EA.Core;
 
 public record Genotype
 {
