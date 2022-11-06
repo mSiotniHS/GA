@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EA;
 using EA.BaseProblem;
 using EA.Core;
 
