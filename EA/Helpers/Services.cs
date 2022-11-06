@@ -11,7 +11,7 @@ internal static class Services
 		Genotype best = null;
 		foreach (var genotype in group)
 		{
-			if (best is null || fitness(genotype) > fitness(best))
+			if (best is null || fitness(genotype) < fitness(best))
 			{
 				best = genotype;
 			}
