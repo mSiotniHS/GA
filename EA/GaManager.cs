@@ -40,6 +40,11 @@ public sealed class GaManager<TBase>
 
 	public TBase FindSolution()
 	{
+		return _baseProblem.Coder.Decode(FindBestGenotype());
+	}
+
+	public Genotype FindBestGenotype()
+	{
 		var population = _populationGenerator.Generate(_core.Parameters.PopulationSize).ToList();
 
 		while (_evaluationStrategy.ShouldWork(this))
@@ -50,7 +55,7 @@ public sealed class GaManager<TBase>
 			Statistics.Save(population);
 		}
 
-		return _baseProblem.Coder.Decode(Services.FindBest(population, Phenotype));
+		return Services.FindBest(population, Phenotype);
 	}
 
 	public int Phenotype(Genotype genotype)
