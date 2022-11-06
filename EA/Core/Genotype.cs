@@ -25,6 +25,13 @@ public record Genotype
 		set => Genes[idx] = value;
 	}
 
+	public int GetNonNull(int idx)
+	{
+		if (idx < 0 || idx >= Length)
+			throw new IndexOutOfRangeException();
+		return Genes[idx] ?? throw new Exception("Gene is null");
+	}
+
 	public int DistanceTo(Genotype other)
 	{
 		var distance = 0;
@@ -61,6 +68,11 @@ public record Genotype
 		}
 
 		return new Genotype(genes);
+	}
+
+	public Genotype FullCopy()
+	{
+		return new Genotype(Genes);
 	}
 
 	public bool Contains(int gene)
