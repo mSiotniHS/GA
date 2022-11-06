@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Common;
 using EA.Core;
 
 namespace Travelling_Salesman_Problem.Crossovers;
 
-// works!
 public sealed class OxCrossover: ICrossover
 {
 	public List<Genotype> Perform(Genotype parent1, Genotype parent2)
@@ -13,11 +11,6 @@ public sealed class OxCrossover: ICrossover
 		// [point1, point2)
 		var point1 = Randomness.GetInt(parent1.Length); // in [0, parent1.Length - 1]
 		var point2 = Randomness.GetInt(point1 + 1, parent1.Length+1); // in [point1 + 1, parent1.Length]
-
-		Console.WriteLine($"[{point1}, {point2})");
-
-		/*point1 = 2;
-		point2 = 5;*/
 
 		var child1 = Base(parent1, parent2, point1, point2);
 		var child2 = Base(parent2, parent1, point1, point2);
