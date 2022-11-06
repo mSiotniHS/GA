@@ -37,6 +37,11 @@ internal sealed class GaCore
 		var children = PerformCrossover(parents);
 		var mutants = Mutate(children);
 
+		if (children.Count == 0)
+		{
+			return population;
+		}
+
 		var reproductionSet = new List<Genotype>(children.Count + mutants.Count);
 		reproductionSet.AddRange(children);
 		reproductionSet.AddRange(mutants);
