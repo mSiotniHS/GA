@@ -30,8 +30,8 @@ public sealed class OxCrossover: ICrossover
 	{
 		var child = parent1.Copy(point1, point2);
 
-		var childIdx = point2;
-		var parent2Idx = point2;
+		var childIdx = point2 % parent1.Length;
+		var parent2Idx = point2 % parent1.Length;
 
 		int Inc(int idx) => (idx + 1) % parent1.Length;
 
