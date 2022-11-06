@@ -1,4 +1,4 @@
-﻿namespace EA;
+﻿namespace EA.Core;
 
 /// <summary>
 /// Record <c>GaParameters</c> содержит параметры ЭГА.
