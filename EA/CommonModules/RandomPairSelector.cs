@@ -15,11 +15,14 @@ public sealed class RandomPairSelector : IPairSelector
 		while (populationList.Count != 0)
 		{
 			var firstIdx = Randomness.GetInt(populationList.Count);
+			var first = populationList[firstIdx];
 			populationList.RemoveAt(firstIdx);
+
 			var secondIdx = Randomness.GetInt(populationList.Count);
+			var second = populationList[secondIdx];
 			populationList.RemoveAt(secondIdx);
 
-			pairs.Add((populationList[firstIdx], populationList[secondIdx]));
+			pairs.Add((first, second));
 		}
 
 		return pairs;
