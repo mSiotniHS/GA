@@ -69,7 +69,6 @@ public class TestCases
 				Mutation: new PointMutation(),
 				Selection: new BetaTournament(2)),
 			new GenerationCountEvaluator<Route>(10),
-			//new TraceSameFitnessEvaluator<Route>(),
 			new StatisticsCommittee(1, 5)
 		);
 
@@ -122,7 +121,6 @@ public class TestCases
 				new PointMutation(),
 				new BetaTournament(2)),
 			new GenerationCountEvaluator<Route>(10),
-			//new TraceSameFitnessEvaluator<Route>(),
 			new StatisticsCommittee(1, 5)
 		);
 
@@ -175,7 +173,6 @@ public class TestCases
 				new PointMutation(),
 				new BetaTournament(2)),
 			new GenerationCountEvaluator<Route>(10),
-			//new TraceSameFitnessEvaluator<Route>(),
 			new StatisticsCommittee(1, 5)
 		);
 
