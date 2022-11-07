@@ -59,7 +59,7 @@ public class TestCases
 				PopulationSize = POPULATION_SIZE,
 				CrossoverRate = CROSSOVER_RATE,
 				MutationRate = MUTATION_RATE,
-				GenerationalPOverlapRatio = GENERATIONAL_OVERLAP_RATIO,
+				GenerationalOverlapRatio = GENERATIONAL_OVERLAP_RATIO,
 				UseElitistStrategy = DONT_USE_ELITISM
 			},
 			new GaModules(
@@ -114,7 +114,7 @@ public class TestCases
 				PopulationSize = POPULATION_SIZE,
 				CrossoverRate = CROSSOVER_RATE,
 				MutationRate = MUTATION_RATE,
-				GenerationalPOverlapRatio = GENERATIONAL_OVERLAP_RATIO,
+				GenerationalOverlapRatio = GENERATIONAL_OVERLAP_RATIO,
 				UseElitistStrategy = true
 			},
 			new GaModules(
@@ -169,7 +169,7 @@ public class TestCases
 				PopulationSize = POPULATION_SIZE,
 				CrossoverRate = .5,
 				MutationRate = .5,
-				GenerationalPOverlapRatio = GENERATIONAL_OVERLAP_RATIO,
+				GenerationalOverlapRatio = GENERATIONAL_OVERLAP_RATIO,
 				UseElitistStrategy = DONT_USE_ELITISM
 			},
 			new GaModules(

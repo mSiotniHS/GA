@@ -28,7 +28,7 @@ internal sealed class GaCore
 		_mutationWeights = new List<double> {Parameters.MutationRate, 1 - Parameters.MutationRate};
 		_crossoverWeights = new List<double> {Parameters.CrossoverRate, 1 - Parameters.CrossoverRate};
 
-		_newcomerCount = Convert.ToUInt32(Parameters.PopulationSize * Parameters.GenerationalPOverlapRatio);
+		_newcomerCount = Convert.ToUInt32(Parameters.PopulationSize * Parameters.GenerationalOverlapRatio);
 	}
 
 	public List<Genotype> PerformIteration(List<Genotype> population, List<(Genotype, Genotype)> parents,

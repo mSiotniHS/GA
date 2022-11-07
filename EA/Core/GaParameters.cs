@@ -30,7 +30,7 @@ public record GaParameters
 	/// Доля заменяемых особей при селекции. При 1 все особи
 	/// поколения заменятся новыми из репродукционного множества.
 	/// </summary>
-	public double GenerationalPOverlapRatio { get; set; }
+	public double GenerationalOverlapRatio { get; set; }
 
 	/// <summary>
 	/// Использовать ли элитарную стратегию при формировании
