@@ -3,12 +3,17 @@
 /// <summary>
 /// Record <c>GaParameters</c> содержит параметры ЭГА.
 /// </summary>
-public record GaParameters
+public record GaParameters(
+	int PopulationSize,
+	double MutationRate,
+	double CrossoverRate,
+	double GenerationalOverlapRatio,
+	bool UseElitistStrategy)
 {
 	/// <summary>
 	/// Размер популяции.
 	/// </summary>
-	public int PopulationSize { get; set; }
+	public int PopulationSize { get; } = PopulationSize;
 
 	/// <summary>
 	/// Вероятность, с которой пройзойдёт мутация конкретной особи.
@@ -16,7 +21,7 @@ public record GaParameters
 	/// Принимает значение от 0 до 1.
 	/// </remarks>
 	/// </summary>
-	public double MutationRate { get; set; }
+	public double MutationRate { get; } = MutationRate;
 
 	/// <summary>
 	/// Вероятность, с которой у двух родителей будет потомство.
@@ -24,17 +29,17 @@ public record GaParameters
 	/// Принимает значение от 0 до 1.
 	/// </remarks>
 	/// </summary>
-	public double CrossoverRate { get; set; }
+	public double CrossoverRate { get; } = CrossoverRate;
 
 	/// <summary>
 	/// Доля заменяемых особей при селекции. При 1 все особи
 	/// поколения заменятся новыми из репродукционного множества.
 	/// </summary>
-	public double GenerationalOverlapRatio { get; set; }
+	public double GenerationalOverlapRatio { get; } = GenerationalOverlapRatio;
 
 	/// <summary>
 	/// Использовать ли элитарную стратегию при формировании
 	/// нового поколения.
 	/// </summary>
-	public bool UseElitistStrategy { get; set; }
+	public bool UseElitistStrategy { get; } = UseElitistStrategy;
 }

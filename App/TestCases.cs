@@ -54,14 +54,12 @@ public class TestCases
 	{
 		var ga = new GaManager<Route>(
 			_tsp,
-			new GaParameters
-			{
-				PopulationSize = POPULATION_SIZE,
-				CrossoverRate = CROSSOVER_RATE,
-				MutationRate = MUTATION_RATE,
-				GenerationalOverlapRatio = GENERATIONAL_OVERLAP_RATIO,
-				UseElitistStrategy = DONT_USE_ELITISM
-			},
+			new GaParameters(
+				PopulationSize: POPULATION_SIZE,
+				CrossoverRate: CROSSOVER_RATE,
+				MutationRate: MUTATION_RATE,
+				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
+				UseElitistStrategy: DONT_USE_ELITISM),
 			new GaModules(
 				PopulationGenerator: new ProblemSolverPopulationGenerator<Route, Tsp>(
 					_tsp,
@@ -109,14 +107,12 @@ public class TestCases
 	{
 		var ga = new GaManager<Route>(
 			_tsp,
-			new GaParameters
-			{
-				PopulationSize = POPULATION_SIZE,
-				CrossoverRate = CROSSOVER_RATE,
-				MutationRate = MUTATION_RATE,
-				GenerationalOverlapRatio = GENERATIONAL_OVERLAP_RATIO,
-				UseElitistStrategy = true
-			},
+			new GaParameters(
+				PopulationSize: POPULATION_SIZE,
+				CrossoverRate: CROSSOVER_RATE,
+				MutationRate: MUTATION_RATE,
+				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
+				UseElitistStrategy: true),
 			new GaModules(
 				new ProblemSolverPopulationGenerator<Route, Tsp>(
 					_tsp,
@@ -164,14 +160,12 @@ public class TestCases
 	{
 		var ga = new GaManager<Route>(
 			_tsp,
-			new GaParameters
-			{
-				PopulationSize = POPULATION_SIZE,
-				CrossoverRate = .5,
-				MutationRate = .5,
-				GenerationalOverlapRatio = GENERATIONAL_OVERLAP_RATIO,
-				UseElitistStrategy = DONT_USE_ELITISM
-			},
+			new GaParameters(
+				PopulationSize: POPULATION_SIZE,
+				CrossoverRate: .5,
+				MutationRate: .5,
+				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
+				UseElitistStrategy: DONT_USE_ELITISM),
 			new GaModules(
 				new ProblemSolverPopulationGenerator<Route, Tsp>(
 					_tsp,
