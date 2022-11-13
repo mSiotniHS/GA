@@ -76,11 +76,6 @@ public record Genotype
 		return new Genotype(genes);
 	}
 
-	public Genotype FullCopy()
-	{
-		return new Genotype(Genes);
-	}
-
 	public bool Contains(int gene)
 	{
 		return ContainsIn(gene, 0, Length);
