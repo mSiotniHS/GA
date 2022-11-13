@@ -3,7 +3,7 @@ using EA.BaseProblem;
 
 namespace Travelling_Salesman_Problem;
 
-public sealed class TspCriterion: ICriterion<List<int>>
+public sealed class TspCriterion : ICriterion<List<int>>
 {
 	private readonly DistanceMatrix _distances;
 
@@ -19,6 +19,7 @@ public sealed class TspCriterion: ICriterion<List<int>>
 		{
 			sum += _distances[bas[i], bas[i + 1]];
 		}
+
 		sum += _distances[bas[^1], bas[0]];
 
 		return sum;

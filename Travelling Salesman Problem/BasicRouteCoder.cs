@@ -5,9 +5,9 @@ using EA.Core;
 
 namespace Travelling_Salesman_Problem;
 
-public sealed class BasicRouteCoder: ICoder<List<int>, Genotype>
+public sealed class BasicRouteCoder : ICoder<List<int>, Genotype>
 {
-	public Genotype Encode(List<int> from) => new (from.Cast<int?>());
+	public Genotype Encode(List<int> from) => new(from.Cast<int?>());
 
 	public List<int> Decode(Genotype to)
 	{

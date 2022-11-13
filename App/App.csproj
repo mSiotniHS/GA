@@ -7,15 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EA\EA.csproj" />
-      <ProjectReference Include="..\Travelling Salesman Problem\Travelling Salesman Problem.csproj" />
+        <ProjectReference Include="..\EA\EA.csproj"/>
+        <ProjectReference Include="..\Travelling Salesman Problem\Travelling Salesman Problem.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="matrix.txt" />
-      <Content Include="matrix.txt">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
+        <None Remove="matrix.txt"/>
+        <Content Include="matrix.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
 </Project>

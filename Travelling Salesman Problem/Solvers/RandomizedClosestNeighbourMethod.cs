@@ -12,7 +12,7 @@ public sealed class RandomizedClosestNeighbourMethod : IProblemSolver<List<int>,
 		var distances = problem.Distances;
 		var firstCity = Randomness.GetInt(distances.CityCount);
 
-		var route = new List<int> { firstCity };
+		var route = new List<int> {firstCity};
 
 		var unvisitedCities = Enumerable.Range(0, distances.CityCount).ToList();
 		unvisitedCities.Remove(firstCity);
@@ -35,7 +35,7 @@ public sealed class RandomizedClosestNeighbourMethod : IProblemSolver<List<int>,
 		var weights = new List<double>();
 		foreach (var unvisitedCity in unvisitedCities)
 		{
-			weights.Add(1 / (double)distances[currentCity, unvisitedCity]);
+			weights.Add(1 / (double) distances[currentCity, unvisitedCity]);
 		}
 
 		return Roulette.Spin(unvisitedCities, weights);

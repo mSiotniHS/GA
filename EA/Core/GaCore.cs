@@ -78,7 +78,8 @@ internal sealed class GaCore
 		return mutants;
 	}
 
-	private List<Genotype> SelectAndSwap(IReadOnlyCollection<Genotype> population, List<Genotype> fund, Func<Genotype, int> phenotype)
+	private List<Genotype> SelectAndSwap(IReadOnlyCollection<Genotype> population, List<Genotype> fund,
+		Func<Genotype, int> phenotype)
 	{
 		var newPopulation = new List<Genotype>(population.Count);
 

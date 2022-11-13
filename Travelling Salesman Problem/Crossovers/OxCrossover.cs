@@ -4,18 +4,18 @@ using EA.Core;
 
 namespace Travelling_Salesman_Problem.Crossovers;
 
-public sealed class OxCrossover: ICrossover
+public sealed class OxCrossover : ICrossover
 {
 	public List<Genotype> Perform(Genotype parent1, Genotype parent2)
 	{
 		// [point1, point2)
 		var point1 = Randomness.GetInt(parent1.Length); // in [0, parent1.Length - 1]
-		var point2 = Randomness.GetInt(point1 + 1, parent1.Length+1); // in [point1 + 1, parent1.Length]
+		var point2 = Randomness.GetInt(point1 + 1, parent1.Length + 1); // in [point1 + 1, parent1.Length]
 
 		var child1 = Base(parent1, parent2, point1, point2);
 		var child2 = Base(parent2, parent1, point1, point2);
 
-		return new List<Genotype> { child1, child2 };
+		return new List<Genotype> {child1, child2};
 	}
 
 	// interval [point1, point2)

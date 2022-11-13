@@ -82,8 +82,7 @@ public sealed class CxCrossover : ICrossover
 
 				numberedCycles[iterationIdx] = cycleCount;
 				iterationIdx = nextIdx;
-			}
-			while (iterationIdx != startIdx);
+			} while (iterationIdx != startIdx);
 
 			if (!is1Cycle.Value)
 			{
