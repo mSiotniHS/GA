@@ -14,7 +14,6 @@ public sealed class CxCrossover : ICrossover
 
 		// TODO если можно подобные родителям, то убрать -2; в цикле начинать с 0
 		var totalChildAmount = Convert.ToInt32(Math.Pow(2, cycleCount)) - 2;
-		Console.WriteLine(totalChildAmount);
 
 		var children = new List<Genotype>(totalChildAmount);
 
