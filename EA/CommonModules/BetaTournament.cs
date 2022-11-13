@@ -12,6 +12,7 @@ public sealed class BetaTournament : ISelection
 
 	public BetaTournament(uint beta)
 	{
+		if (beta < 2) throw new ArgumentOutOfRangeException(nameof(beta), "Beta must be greater than 1.");
 		_beta = beta;
 	}
 
