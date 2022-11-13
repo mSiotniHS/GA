@@ -96,7 +96,7 @@ internal sealed class GaCore
 			survivors = Selection.Perform(fund, phenotype, _newcomerCount).ToList();
 		}
 
-		var toBeSaved = population.Select(x => x.FullCopy()).ToList();
+		var toBeSaved = population.Select(x => new Genotype(x)).ToList();
 		for (var i = 0; i < _newcomerCount; i++)
 		{
 			toBeSaved.RemoveAt(Randomness.GetInt(toBeSaved.Count));
