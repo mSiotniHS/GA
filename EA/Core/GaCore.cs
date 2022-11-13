@@ -8,9 +8,9 @@ namespace EA.Core;
 
 internal sealed class GaCore
 {
-	private static readonly List<bool> Items = new() {true, false};
-	private readonly List<double> _mutationWeights;
-	private readonly List<double> _crossoverWeights;
+	private static readonly bool[] Items = {true, false};
+	private readonly double[] _mutationWeights;
+	private readonly double[] _crossoverWeights;
 	private readonly uint _newcomerCount;
 
 	private ICrossover Crossover { get; }
@@ -25,8 +25,8 @@ internal sealed class GaCore
 		Mutation = mutation;
 		Selection = selection;
 
-		_mutationWeights = new List<double> {Parameters.MutationRate, 1 - Parameters.MutationRate};
-		_crossoverWeights = new List<double> {Parameters.CrossoverRate, 1 - Parameters.CrossoverRate};
+		_mutationWeights = new[] {Parameters.MutationRate, 1 - Parameters.MutationRate};
+		_crossoverWeights = new[] {Parameters.CrossoverRate, 1 - Parameters.CrossoverRate};
 
 		_newcomerCount = Convert.ToUInt32(Parameters.PopulationSize * Parameters.GenerationalOverlapRatio);
 	}

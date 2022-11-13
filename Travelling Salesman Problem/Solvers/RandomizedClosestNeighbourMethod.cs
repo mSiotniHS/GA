@@ -30,12 +30,13 @@ public sealed class RandomizedClosestNeighbourMethod : IProblemSolver<List<int>,
 		return route;
 	}
 
-	private static int NextCity(DistanceMatrix distances, int currentCity, List<int> unvisitedCities)
+	private static int NextCity(DistanceMatrix distances, int currentCity, IList<int> unvisitedCities)
 	{
-		var weights = new List<double>();
-		foreach (var unvisitedCity in unvisitedCities)
+		var weights = new double[unvisitedCities.Count];
+		for (var i = 0; i < unvisitedCities.Count; i++)
 		{
-			weights.Add(1 / (double) distances[currentCity, unvisitedCity]);
+			var unvisitedCity = unvisitedCities[i];
+			weights[i] = (1 / (double) distances[currentCity, unvisitedCity]);
 		}
 
 		return Roulette.Spin(unvisitedCities, weights);
