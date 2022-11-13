@@ -100,5 +100,16 @@ public record Genotype
 		return false;
 	}
 
+	public int[] ToFilledArray()
+	{
+		var array = new int[Length];
+		for (var i = 0; i < Length; i++)
+		{
+			array[i] = GetNonNull(i);
+		}
+
+		return array;
+	}
+
 	public override string ToString() => $"({string.Join(", ", Genes)})";
 }
