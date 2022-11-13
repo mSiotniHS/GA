@@ -12,6 +12,11 @@ public sealed class CxCrossover : ICrossover
 		var (numberedCycles, cycleCount)
 			= NumberCycles(parent1.ToFilledArray(), parent2.ToFilledArray());
 
+		if (cycleCount <= 1)
+		{
+			return new List<Genotype>();
+		}
+
 		// TODO если можно подобные родителям, то убрать -2; в цикле начинать с 0
 		var totalChildAmount = Convert.ToInt32(Math.Pow(2, cycleCount)) - 2;
 
