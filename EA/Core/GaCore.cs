@@ -13,17 +13,17 @@ internal sealed class GaCore
 	private readonly double[] _crossoverWeights;
 	private readonly uint _newcomerCount;
 
-	private ICrossover Crossover { get; }
-	private IMutation Mutation { get; }
-	private ISelection Selection { get; }
+	private readonly ICrossover _crossover;
+	private readonly IMutation _mutation;
+	private readonly ISelection _selection;
 	public GaParameters Parameters { get; }
 
 	public GaCore(GaParameters parameters, ICrossover crossover, IMutation mutation, ISelection selection)
 	{
 		Parameters = parameters;
-		Crossover = crossover;
-		Mutation = mutation;
-		Selection = selection;
+		_crossover = crossover;
+		_mutation = mutation;
+		_selection = selection;
 
 		_mutationWeights = new[] {Parameters.MutationRate, 1 - Parameters.MutationRate};
 		_crossoverWeights = new[] {Parameters.CrossoverRate, 1 - Parameters.CrossoverRate};
@@ -58,7 +58,7 @@ internal sealed class GaCore
 			if (!toGiveBirth) continue;
 
 			var (parent1, parent2) = parentPair;
-			children.AddRange(Crossover.Perform(parent1, parent2));
+			children.AddRange(_crossover.Perform(parent1, parent2));
 		}
 
 		return children;
@@ -72,7 +72,7 @@ internal sealed class GaCore
 			var toMutate = Roulette.Spin(Items, _mutationWeights);
 			if (!toMutate) continue;
 
-			mutants.Add(Mutation.Perform(child));
+			mutants.Add(_mutation.Perform(child));
 		}
 
 		return mutants;
@@ -90,11 +90,11 @@ internal sealed class GaCore
 			newPopulation.Add(best);
 			fund.Remove(best);
 
-			survivors = Selection.Perform(fund, phenotype, _newcomerCount - 1).ToList();
+			survivors = _selection.Perform(fund, phenotype, _newcomerCount - 1).ToList();
 		}
 		else
 		{
-			survivors = Selection.Perform(fund, phenotype, _newcomerCount).ToList();
+			survivors = _selection.Perform(fund, phenotype, _newcomerCount).ToList();
 		}
 
 		var toBeSaved = population.Select(x => new Genotype(x)).ToList();
