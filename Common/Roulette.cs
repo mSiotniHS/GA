@@ -9,7 +9,7 @@ public static class Roulette
 	{
 		if (items.Count != weights.Count)
 		{
-			throw new ArgumentException("Items and weights must have the same length");
+			throw new ArgumentException($"[{nameof(Roulette)}/{nameof(Spin)}] Числа предметов и весов должны совпадать");
 		}
 
 		var totalWeight = 0.0;
@@ -30,6 +30,6 @@ public static class Roulette
 			}
 		}
 
-		throw new Exception("That can't be right");
+		throw new Exception($"[{nameof(Roulette)}/{nameof(Spin)}] Случайное число оказалось вне отрезка");
 	}
 }

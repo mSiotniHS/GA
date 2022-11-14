@@ -24,7 +24,8 @@ public sealed class GaManager<TBase>
 		IEvaluationStrategy<TBase> evaluationStrategy,
 		StatisticsCommittee? statistics = null)
 	{
-		if (parameters.PopulationSize % 2 != 0) throw new ArgumentException("Population size better be even");
+		if (parameters.PopulationSize % 2 != 0)
+			throw new ArgumentException($"[{nameof(GaManager<TBase>)}/cons] Размер популяции должен быть чётным числом");
 
 		_core = new GaCore(parameters, modules.Crossover, modules.Mutation, modules.Selection);
 		_baseProblem = baseProblem;

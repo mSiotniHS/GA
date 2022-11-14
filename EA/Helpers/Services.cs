@@ -17,6 +17,6 @@ internal static class Services
 			}
 		}
 
-		return best ?? throw new Exception("can't be right");
+		return best ?? throw new Exception($"[{nameof(Services)}/{nameof(FindBest)}] Не удалось найти лучшего");
 	}
 }

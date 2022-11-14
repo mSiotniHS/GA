@@ -253,7 +253,7 @@ public class TestCases
 			for (var j = i + 1; j < split.Length; j++)
 			{
 				var successfulParse = int.TryParse(split[j], out var distance);
-				if (!successfulParse) throw new Exception("Failed to parse distance");
+				if (!successfulParse) throw new Exception($"[{nameof(TestCases)}/{nameof(FromFile)}] Не удалось отпарсить расстояние");
 				distances.Add(distance);
 			}
 

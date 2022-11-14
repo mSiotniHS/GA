@@ -35,7 +35,8 @@ public record Genotype
 	{
 		if (idx < 0 || idx >= Length)
 			throw new IndexOutOfRangeException();
-		return Genes[idx] ?? throw new Exception("Gene is null");
+		return Genes[idx] ?? throw new Exception(
+			$"[{nameof(Genotype)}/{nameof(GetNonNull)}] Ген под индексом {idx} не определён");
 	}
 
 	public int DistanceTo(Genotype other)
@@ -48,7 +49,7 @@ public record Genotype
 
 			if (value is null || otherValue is null)
 			{
-				throw new Exception("Genotype is not fully defined");
+				throw new Exception($"[{nameof(Genotype)}/{nameof(DistanceTo)}] Один из генотипов не определён полностью");
 			}
 
 			distance += Math.Abs(value.Value - otherValue.Value);

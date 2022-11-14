@@ -12,7 +12,7 @@ public sealed class DistanceMatrix
 	{
 		CityCount = cityCount;
 		if (data.Length != CityCount * (CityCount - 1) / 2)
-			throw new ArgumentException("Invalid data length");
+			throw new ArgumentException($"[{nameof(DistanceMatrix)}/cons] Длина данных и количество городов не соотносятся");
 		_data = data;
 	}
 
