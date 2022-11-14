@@ -15,7 +15,7 @@ namespace App;
 
 using Route = List<int>;
 
-public class TestCases
+public sealed class TestCases
 {
 	private readonly Tsp _tsp;
 
