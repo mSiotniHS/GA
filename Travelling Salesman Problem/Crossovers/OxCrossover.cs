@@ -21,7 +21,7 @@ public sealed class OxCrossover : ICrossover
 	// interval [point1, point2)
 	private static Genotype Base(Genotype parent1, Genotype parent2, int point1, int point2)
 	{
-		var child = parent1.Copy(point1, point2);
+		var child = parent1.Extract(point1, point2);
 
 		var childIdx = point2 % parent1.Length;
 		var parent2Idx = point2 % parent1.Length;

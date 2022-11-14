@@ -58,7 +58,7 @@ public record Genotype
 	}
 
 	// interval [start, end)
-	public Genotype Copy(int start, int end)
+	public Genotype Extract(int start, int end)
 	{
 		var genes = new List<int?>();
 		for (var i = 0; i < Length; i++)
