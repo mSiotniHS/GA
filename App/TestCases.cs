@@ -24,6 +24,7 @@ public sealed class TestCases
 	private const double MUTATION_RATE = 0.05;
 	private const double GENERATIONAL_OVERLAP_RATIO = 0.5;
 	private const bool DONT_USE_ELITISM = false;
+	private const int MAX_GENERATIONS = 5;
 
 	public TestCases()
 	{
@@ -48,7 +49,7 @@ public sealed class TestCases
 	/// -- Мутация                       : точечная
 	/// -- Селекция                      : β-турнир с параметром 2
 	///
-	/// - Завершение работы              : при достижении 10 поколения
+	/// - Завершение работы              : при достижении 5 поколения
 	/// - Статистика                     : каждый, макс. 5
 	public void Test1(int runCount)
 	{
@@ -68,7 +69,7 @@ public sealed class TestCases
 				Crossover: new OxCrossover(),
 				Mutation: new PointMutation(),
 				Selection: new BetaTournament(2)),
-			new GenerationCountEvaluator<Route>(10),
+			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
 			new StatisticsCommittee(1, 5)
 		);
 
@@ -100,7 +101,7 @@ public sealed class TestCases
 	/// -- Мутация                       : точечная
 	/// -- Селекция                      : β-турнир с параметром 2
 	///
-	/// - Завершение работы              : при достижении 10 поколения
+	/// - Завершение работы              : при достижении 5 поколения
 	/// - Статистика                     : каждый, макс. 5
 	public void Test2(uint runCount)
 	{
@@ -120,7 +121,7 @@ public sealed class TestCases
 				new OxCrossover(),
 				new PointMutation(),
 				new BetaTournament(2)),
-			new GenerationCountEvaluator<Route>(10),
+			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
 			new StatisticsCommittee(1, 5)
 		);
 
@@ -152,7 +153,7 @@ public sealed class TestCases
 	/// -- Мутация                       : точечная
 	/// -- Селекция                      : β-турнир с параметром 2
 	///
-	/// - Завершение работы              : при достижении 10 поколения
+	/// - Завершение работы              : при достижении 5 поколения
 	/// - Статистика                     : каждый, макс. 5
 	public void Test3(uint runCount)
 	{
@@ -172,7 +173,7 @@ public sealed class TestCases
 				new OxCrossover(),
 				new PointMutation(),
 				new BetaTournament(2)),
-			new GenerationCountEvaluator<Route>(10),
+			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
 			new StatisticsCommittee(1, 5)
 		);
 
@@ -204,7 +205,7 @@ public sealed class TestCases
 	/// -- Мутация                       : точечная
 	/// -- Селекция                      : β-турнир с параметром 2
 	///
-	/// - Завершение работы              : при достижении 10 поколения
+	/// - Завершение работы              : при достижении 5 поколения
 	/// - Статистика                     : каждый, макс. 5
 	public void Test4(uint runCount)
 	{
@@ -224,8 +225,8 @@ public sealed class TestCases
 				new CxCrossover(),
 				new Inversion(),
 				new BetaTournament(2)),
-			new GenerationCountEvaluator<Route>(10),
-			new StatisticsCommittee(0, 5)
+			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
+			new StatisticsCommittee(1, 5)
 		);
 
 		var bests = new Genotype[runCount];
