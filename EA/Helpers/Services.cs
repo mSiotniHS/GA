@@ -8,7 +8,7 @@ internal static class Services
 {
 	public static Genotype FindBest(IEnumerable<Genotype> group, Func<Genotype, int> fitness)
 	{
-		Genotype best = null;
+		Genotype? best = null;
 		foreach (var genotype in group)
 		{
 			if (best is null || fitness(genotype) < fitness(best))
