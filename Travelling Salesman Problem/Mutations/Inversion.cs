@@ -8,14 +8,18 @@ public sealed class Inversion : IMutation
 	public Genotype Perform(Genotype genotype)
 	{
 		// [startIdx, endIdx)
-		var startIdx = Randomness.GetInt(genotype.Length);
+		var startIdx = Randomness.GetInt(genotype.Length - 1); // -1, чтобы хотя бы 2 гена было
 		var endIdx = Randomness.GetInt(startIdx + 1, genotype.Length + 1);
 
 		var newGenotype = new Genotype(genotype);
 
-		for (var i = startIdx; i < startIdx + (endIdx - startIdx) / 2; i++)
+		var length = endIdx - startIdx;
+		var halfLength = length / 2;
+		for (var i = 0; i < halfLength; i++)
 		{
-			(newGenotype[i], newGenotype[endIdx - i]) = (newGenotype[endIdx - i], newGenotype[i]);
+			var left = i + startIdx;
+			var right = endIdx - i - 1;
+			(newGenotype[left], newGenotype[right]) = (newGenotype[right], newGenotype[left]);
 		}
 
 		return newGenotype;
