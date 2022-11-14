@@ -72,10 +72,10 @@ public class TestCases
 			new StatisticsCommittee(1, 5)
 		);
 
-		var bests = new List<Genotype>();
+		var bests = new Genotype[runCount];
 		for (var i = 0; i < runCount; i++)
 		{
-			bests.Add(ga.FindBestGenotype());
+			bests[i] = ga.FindBestGenotype();
 		}
 
 		Console.WriteLine($"Статистика теста 1 за {runCount} запусков:");
@@ -124,10 +124,10 @@ public class TestCases
 			new StatisticsCommittee(1, 5)
 		);
 
-		var bests = new List<Genotype>();
+		var bests = new Genotype[runCount];
 		for (var i = 0; i < runCount; i++)
 		{
-			bests.Add(ga.FindBestGenotype());
+			bests[i] = ga.FindBestGenotype();
 		}
 
 		Console.WriteLine($"Статистика теста 2 за {runCount} запусков:");
@@ -176,10 +176,10 @@ public class TestCases
 			new StatisticsCommittee(1, 5)
 		);
 
-		var bests = new List<Genotype>();
+		var bests = new Genotype[runCount];
 		for (var i = 0; i < runCount; i++)
 		{
-			bests.Add(ga.FindBestGenotype());
+			bests[i] = ga.FindBestGenotype();
 		}
 
 		Console.WriteLine($"Статистика теста 3 за {runCount} запусков:");
@@ -228,10 +228,10 @@ public class TestCases
 			new StatisticsCommittee(0, 5)
 		);
 
-		var bests = new List<Genotype>();
+		var bests = new Genotype[runCount];
 		for (var i = 0; i < runCount; i++)
 		{
-			bests.Add(ga.FindBestGenotype());
+			bests[i] = ga.FindBestGenotype();
 		}
 
 		Console.WriteLine($"Статистика теста 4 за {runCount} запусков:");
