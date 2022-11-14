@@ -18,4 +18,6 @@ public sealed class GenerationCountEvaluator<TBase> : IEvaluationStrategy<TBase>
 	{
 		return _maxGenerations != state.Statistics.TotalGenerationCount;
 	}
+
+	public void Reset() {}
 }

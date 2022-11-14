@@ -35,4 +35,11 @@ public sealed class StatisticsCommittee
 		if (Trace.Count > _maxTraceLength) Trace.RemoveAt(0);
 		_counter = 0;
 	}
+
+	public void Reset()
+	{
+		Trace.Clear();
+		_counter = 0;
+		TotalGenerationCount = 0;
+	}
 }

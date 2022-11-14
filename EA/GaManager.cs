@@ -46,6 +46,9 @@ public sealed class GaManager<TBase>
 
 	public Genotype FindBestGenotype()
 	{
+		Statistics.Reset();
+		_evaluationStrategy.Reset();
+
 		var population = _populationGenerator.Generate(_core.Parameters.PopulationSize).ToList();
 
 		while (_evaluationStrategy.ShouldWork(this))
