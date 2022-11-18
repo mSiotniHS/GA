@@ -20,16 +20,12 @@ public sealed class BetaTournament : ISelection
 		_beta = beta;
 	}
 
-	public IEnumerable<Genotype> Perform(List<Genotype> fund, Func<Genotype, int> phenotype,
-		uint count)
+	public IEnumerable<Genotype> Perform(List<Genotype> fund, Func<Genotype, int> phenotype, uint count)
 	{
-		var selected = new List<Genotype>();
 		for (var selectedCount = 0; selectedCount < count; selectedCount++)
 		{
-			selected.Add(Round(fund, phenotype));
+			yield return Round(fund, phenotype);
 		}
-
-		return selected;
 	}
 
 	private Genotype Round(IReadOnlyList<Genotype> fund, Func<Genotype, int> phenotype)
