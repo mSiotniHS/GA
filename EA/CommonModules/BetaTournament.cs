@@ -13,8 +13,10 @@ public sealed class BetaTournament : ISelection
 	public BetaTournament(uint beta)
 	{
 		if (beta < 2)
+		{
 			throw new ArgumentOutOfRangeException(
 				nameof(beta), $"[{nameof(BetaTournament)}/cons] Параметр Beta должен быть больше единицы");
+		}
 		_beta = beta;
 	}
 
