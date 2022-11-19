@@ -1,17 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using EA.BaseProblem;
 using EA.Core;
 
 namespace Travelling_Salesman_Problem;
 
-public sealed class BasicRouteCoder : ICoder<List<int>, Genotype>
+public sealed class BasicRouteCoder : ICoder<Route, Genotype>
 {
-	public Genotype Encode(List<int> from) => new(from.Cast<int?>());
+	public Genotype Encode(Route from) => new(from.Cast<int?>());
 
-	public List<int> Decode(Genotype to)
+	public Route Decode(Genotype to)
 	{
-		var from = new List<int>();
+		var from = new Route();
 
 		for (var i = 0; i < to.Length; i++)
 		{

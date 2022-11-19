@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using EA.BaseProblem;
+﻿using EA.BaseProblem;
 using EA.Core;
 
 namespace Travelling_Salesman_Problem;
@@ -9,11 +8,11 @@ namespace Travelling_Salesman_Problem;
 /// интерфейс <c>IGAProblem</c>, поэтому может быть
 /// использован как базовая задача ЭГА.
 /// </summary>
-public sealed class Tsp : IGaProblem<List<int>>
+public sealed class Tsp : IGaProblem<Route>
 {
 	public DistanceMatrix Distances { get; }
-	public ICoder<List<int>, Genotype> Coder { get; }
-	public ICriterion<List<int>> Criterion { get; }
+	public ICoder<Route, Genotype> Coder { get; }
+	public ICriterion<Route> Criterion { get; }
 
 	public Tsp(DistanceMatrix distances)
 	{

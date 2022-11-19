@@ -5,14 +5,14 @@ using EA.BaseProblem;
 
 namespace Travelling_Salesman_Problem.Solvers;
 
-public sealed class RandomizedClosestNeighbourMethod : IProblemSolver<List<int>, Tsp>
+public sealed class RandomizedClosestNeighbourMethod : IProblemSolver<Route, Tsp>
 {
-	public List<int> FindSolution(Tsp problem)
+	public Route FindSolution(Tsp problem)
 	{
 		var distances = problem.Distances;
 		var firstCity = Randomness.GetInt(distances.CityCount);
 
-		var route = new List<int> {firstCity};
+		var route = new Route {firstCity};
 
 		var unvisitedCities = Enumerable.Range(0, distances.CityCount).ToList();
 		unvisitedCities.Remove(firstCity);

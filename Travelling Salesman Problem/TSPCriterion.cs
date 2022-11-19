@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using EA.BaseProblem;
+﻿using EA.BaseProblem;
 
 namespace Travelling_Salesman_Problem;
 
-public sealed class TspCriterion : ICriterion<List<int>>
+public sealed class TspCriterion : ICriterion<Route>
 {
 	private readonly DistanceMatrix _distances;
 
@@ -12,7 +11,7 @@ public sealed class TspCriterion : ICriterion<List<int>>
 		_distances = distances;
 	}
 
-	public int Calculate(List<int> bas)
+	public int Calculate(Route bas)
 	{
 		var sum = 0;
 		for (var i = 0; i < bas.Count - 1; i++)
