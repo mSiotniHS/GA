@@ -1,6 +1,6 @@
 ﻿namespace EA.BaseProblem;
 
-public interface IProblemSolver<out TBase, in TProblem> where TProblem : IProblem<TBase>
+public interface IProblemSolver<out TBaseType, in TBaseProblem> where TBaseProblem : IProblem<TBaseType>
 {
-	public TBase FindSolution(TProblem problem);
+	public TBaseType FindSolution(TBaseProblem problem);
 }

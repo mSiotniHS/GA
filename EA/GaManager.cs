@@ -6,26 +6,26 @@ using EA.Helpers;
 
 namespace EA;
 
-public sealed class GaManager<TBase>
+public sealed class GaManager<TBaseType>
 {
-	private readonly IGaProblem<TBase> _baseProblem;
+	private readonly IGaProblem<TBaseType> _baseProblem;
 
 	private readonly GaCore _core;
 	private readonly IPairSelector _pairSelector;
 	private readonly IPopulationGenerator _populationGenerator;
 
 	public StatisticsCommittee Statistics { get; }
-	private readonly IEvaluationStrategy<TBase> _evaluationStrategy;
+	private readonly IEvaluationStrategy<TBaseType> _evaluationStrategy;
 
 	public GaManager(
-		IGaProblem<TBase> baseProblem,
+		IGaProblem<TBaseType> baseProblem,
 		GaParameters parameters,
 		GaModules modules,
-		IEvaluationStrategy<TBase> evaluationStrategy,
+		IEvaluationStrategy<TBaseType> evaluationStrategy,
 		StatisticsCommittee? statistics = null)
 	{
 		if (parameters.PopulationSize % 2 != 0)
-			throw new ArgumentException($"[{nameof(GaManager<TBase>)}/cons] Размер популяции должен быть чётным числом");
+			throw new ArgumentException($"[{nameof(GaManager<TBaseType>)}/cons] Размер популяции должен быть чётным числом");
 
 		_core = new GaCore(parameters, modules.Crossover, modules.Mutation, modules.Selection);
 		_baseProblem = baseProblem;
@@ -39,7 +39,7 @@ public sealed class GaManager<TBase>
 		};
 	}
 
-	public TBase FindSolution()
+	public TBaseType FindSolution()
 	{
 		return _baseProblem.Coder.Decode(FindBestGenotype());
 	}

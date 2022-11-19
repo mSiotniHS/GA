@@ -4,8 +4,8 @@
 /// Завершает работу ЭГА при достижении
 /// определённого поколения.
 /// </summary>
-/// <typeparam name="TBase"></typeparam>
-public sealed class GenerationCountEvaluator<TBase> : IEvaluationStrategy<TBase>
+/// <typeparam name="TBaseType"></typeparam>
+public sealed class GenerationCountEvaluator<TBaseType> : IEvaluationStrategy<TBaseType>
 {
 	private readonly int _maxGenerations;
 
@@ -14,7 +14,7 @@ public sealed class GenerationCountEvaluator<TBase> : IEvaluationStrategy<TBase>
 		_maxGenerations = maxGenerations;
 	}
 
-	public bool ShouldWork(GaManager<TBase> state)
+	public bool ShouldWork(GaManager<TBaseType> state)
 	{
 		return _maxGenerations != state.Statistics.TotalGenerationCount;
 	}

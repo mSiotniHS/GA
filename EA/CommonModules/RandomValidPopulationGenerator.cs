@@ -4,12 +4,12 @@ using EA.Core;
 
 namespace EA.CommonModules;
 
-public sealed class RandomValidPopulationGenerator<TBase, TGaProblem> : IPopulationGenerator
-	where TGaProblem : IGaProblem<TBase>, IRandomSolutionGenerator<TBase>
+public sealed class RandomValidPopulationGenerator<TBaseType, TBaseProblem> : IPopulationGenerator
+	where TBaseProblem : IGaProblem<TBaseType>, IRandomSolutionGenerator<TBaseType>
 {
-	private readonly TGaProblem _baseProblem;
+	private readonly TBaseProblem _baseProblem;
 
-	public RandomValidPopulationGenerator(TGaProblem baseProblem)
+	public RandomValidPopulationGenerator(TBaseProblem baseProblem)
 	{
 		_baseProblem = baseProblem;
 	}

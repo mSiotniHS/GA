@@ -4,13 +4,13 @@ using EA.Core;
 
 namespace EA.CommonModules;
 
-public sealed class ProblemSolverPopulationGenerator<TBase, TGaProblem> : IPopulationGenerator
-	where TGaProblem : IGaProblem<TBase>
+public sealed class ProblemSolverPopulationGenerator<TBaseType, TBaseProblem> : IPopulationGenerator
+	where TBaseProblem : IGaProblem<TBaseType>
 {
-	private TGaProblem BaseProblem { get; }
-	private IProblemSolver<TBase, TGaProblem> ProblemSolver { get; }
+	private TBaseProblem BaseProblem { get; }
+	private IProblemSolver<TBaseType, TBaseProblem> ProblemSolver { get; }
 
-	public ProblemSolverPopulationGenerator(TGaProblem baseProblem, IProblemSolver<TBase, TGaProblem> problemSolver)
+	public ProblemSolverPopulationGenerator(TBaseProblem baseProblem, IProblemSolver<TBaseType, TBaseProblem> problemSolver)
 	{
 		BaseProblem = baseProblem;
 		ProblemSolver = problemSolver;

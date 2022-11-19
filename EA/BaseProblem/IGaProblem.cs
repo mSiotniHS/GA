@@ -2,7 +2,7 @@
 
 namespace EA.BaseProblem;
 
-public interface IGaProblem<TBase> : IProblem<TBase>
+public interface IGaProblem<TBaseType> : IProblem<TBaseType>
 {
-	public ICoder<TBase, Genotype> Coder { get; }
+	public ICoder<TBaseType, Genotype> Coder { get; }
 }

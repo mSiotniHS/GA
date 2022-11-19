@@ -1,6 +1,6 @@
 ﻿namespace EA.BaseProblem;
 
-public interface IRandomSolutionGenerator<out TBase>
+public interface IRandomSolutionGenerator<out TBaseType>
 {
-	public TBase PickRandom();
+	public TBaseType PickRandom();
 }

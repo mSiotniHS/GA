@@ -1,6 +1,6 @@
 ﻿namespace EA.BaseProblem;
 
-public interface IProblem<in TBase>
+public interface IProblem<in TBaseType>
 {
-	public ICriterion<TBase> Criterion { get; }
+	public ICriterion<TBaseType> Criterion { get; }
 }

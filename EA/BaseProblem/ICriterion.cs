@@ -1,6 +1,6 @@
 ﻿namespace EA.BaseProblem;
 
-public interface ICriterion<in TBase>
+public interface ICriterion<in TBaseType>
 {
-	public int Calculate(TBase bas);
+	public int Calculate(TBaseType bas);
 }
