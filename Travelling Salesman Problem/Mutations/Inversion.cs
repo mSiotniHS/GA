@@ -14,7 +14,7 @@ public sealed class Inversion : IMutation
 
 		// [startIdx, endIdx)
 		var startIdx = Randomness.GetInt(genotype.Length - 1); // -1, чтобы хотя бы 2 гена было
-		var endIdx = Randomness.GetInt(startIdx + 1, genotype.Length + 1);
+		var endIdx = Randomness.GetInt(startIdx + 2, genotype.Length + 1);
 
 #if DEBUG
 		Logger.Log($"[startIdx, endIdx) = [{startIdx}, {endIdx})");
