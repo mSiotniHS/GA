@@ -7,20 +7,20 @@ namespace EA.CommonModules;
 public sealed class ProblemSolverPopulationGenerator<TBaseType, TBaseProblem> : IPopulationGenerator
 	where TBaseProblem : IGaProblem<TBaseType>
 {
-	private TBaseProblem BaseProblem { get; }
-	private IProblemSolver<TBaseType, TBaseProblem> ProblemSolver { get; }
+	private readonly TBaseProblem _baseProblem;
+	private readonly IProblemSolver<TBaseType, TBaseProblem> _problemSolver;
 
 	public ProblemSolverPopulationGenerator(TBaseProblem baseProblem, IProblemSolver<TBaseType, TBaseProblem> problemSolver)
 	{
-		BaseProblem = baseProblem;
-		ProblemSolver = problemSolver;
+		_baseProblem = baseProblem;
+		_problemSolver = problemSolver;
 	}
 
 	public IEnumerable<Genotype> Generate(int count)
 	{
 		for (var i = 0; i < count; i++)
 		{
-			yield return BaseProblem.Coder.Encode(ProblemSolver.FindSolution(BaseProblem));
+			yield return _baseProblem.Coder.Encode(_problemSolver.FindSolution(_baseProblem));
 		}
 	}
 }
