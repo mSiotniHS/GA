@@ -1,4 +1,6 @@
-﻿using EA.BaseProblem;
+﻿using System.Linq;
+using Common;
+using EA.BaseProblem;
 using EA.Core;
 
 namespace Travelling_Salesman_Problem;
@@ -8,7 +10,7 @@ namespace Travelling_Salesman_Problem;
 /// интерфейс <c>IGAProblem</c>, поэтому может быть
 /// использован как базовая задача ЭГА.
 /// </summary>
-public sealed class Tsp : IGaProblem<Route>
+public sealed class Tsp : IGaProblem<Route>, IRandomSolutionGenerator<Route>
 {
 	public DistanceMatrix Distances { get; }
 	public ICoder<Route, Genotype> Coder { get; }
@@ -19,5 +21,13 @@ public sealed class Tsp : IGaProblem<Route>
 		Distances = distances;
 		Coder = new BasicRouteCoder();
 		Criterion = new TspCriterion(distances);
+	}
+
+	public Route PickRandom()
+	{
+		return Enumerable
+			.Range(0, Distances.CityCount)
+			.OrderBy(_ => Randomness.GetInt())
+			.ToList();
 	}
 }
