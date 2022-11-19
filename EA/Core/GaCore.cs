@@ -82,22 +82,34 @@ internal sealed class GaCore
 		Func<Genotype, int> phenotype)
 	{
 		var newPopulation = new List<Genotype>(population.Count);
+		var toBeSaved = population.Select(x => new Genotype(x)).ToList();
 
 		List<Genotype> survivors;
 		if (Parameters.UseElitistStrategy)
 		{
-			var best = Services.FindBest(fund, phenotype);
-			newPopulation.Add(best);
-			fund.Remove(best);
+			var bestParent = Services.FindBest(toBeSaved, phenotype);
+			var bestChild = Services.FindBest(fund, phenotype);
 
-			survivors = _selection.Perform(fund, phenotype, _newcomerCount - 1).ToList();
+			if (phenotype(bestChild) <= phenotype(bestParent))
+			{
+				newPopulation.Add(bestChild);
+				fund.Remove(bestChild);
+
+				survivors = _selection.Perform(fund, phenotype, _newcomerCount - 1).ToList();
+			}
+			else
+			{
+				newPopulation.Add(bestParent);
+				toBeSaved.Remove(bestParent);
+
+				survivors = _selection.Perform(fund, phenotype, _newcomerCount).ToList();
+			}
 		}
 		else
 		{
 			survivors = _selection.Perform(fund, phenotype, _newcomerCount).ToList();
 		}
 
-		var toBeSaved = population.Select(x => new Genotype(x)).ToList();
 		for (var i = 0; i < _newcomerCount; i++)
 		{
 			toBeSaved.RemoveAt(Randomness.GetInt(toBeSaved.Count));
