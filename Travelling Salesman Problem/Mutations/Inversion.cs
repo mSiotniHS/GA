@@ -7,16 +7,20 @@ public sealed class Inversion : IMutation
 {
 	public Genotype Perform(Genotype genotype)
 	{
-#if DEBUG
-		Logger.Begin(nameof(Inversion), nameof(Perform));
-		Logger.Log($"Исходный генотип: {genotype}");
-#endif
-
-		// [startIdx, endIdx)
 		var startIdx = Randomness.GetInt(genotype.Length - 1); // -1, чтобы хотя бы 2 гена было
 		var endIdx = Randomness.GetInt(startIdx + 2, genotype.Length + 1);
 
+		return PurePerform(genotype, startIdx, endIdx);
+	}
+
+	public bool GuaranteesValidGenotype => true;
+
+	// [startIdx, endIdx)
+	private static Genotype PurePerform(Genotype genotype, int startIdx, int endIdx)
+	{
 #if DEBUG
+		Logger.Begin(nameof(Inversion), nameof(PurePerform));
+		Logger.Log($"Исходный генотип: {genotype}");
 		Logger.Log($"[startIdx, endIdx) = [{startIdx}, {endIdx})");
 #endif
 
@@ -38,6 +42,4 @@ public sealed class Inversion : IMutation
 
 		return newGenotype;
 	}
-
-	public bool GuaranteesValidGenotype => true;
 }
