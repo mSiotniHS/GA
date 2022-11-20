@@ -11,15 +11,15 @@ public sealed class TspCriterion : ICriterion<Route>
 		_distances = distances;
 	}
 
-	public int Calculate(Route bas)
+	public int Calculate(Route route)
 	{
 		var sum = 0;
-		for (var i = 0; i < bas.Count - 1; i++)
+		for (var i = 0; i < route.Count - 1; i++)
 		{
-			sum += _distances[bas[i], bas[i + 1]];
+			sum += _distances[route[i], route[i + 1]];
 		}
 
-		sum += _distances[bas[^1], bas[0]];
+		sum += _distances[route[^1], route[0]];
 
 		return sum;
 	}
