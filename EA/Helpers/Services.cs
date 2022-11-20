@@ -4,7 +4,7 @@ using EA.Core;
 
 namespace EA.Helpers;
 
-internal static class Services
+public static class Services
 {
 	public static Genotype FindBest(IEnumerable<Genotype> group, Func<Genotype, int> fitness)
 	{
