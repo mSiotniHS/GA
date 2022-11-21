@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Common;
 using EA.BaseProblem;
 using EA.Core;
 using EA.Helpers;
@@ -46,18 +47,49 @@ public sealed class GaManager<TBaseType>
 
 	public Genotype FindBestGenotype()
 	{
+#if DEBUG
+		Logger.Begin(nameof(GaManager<TBaseType>), nameof(FindBestGenotype));
+#endif
+
 		Statistics.Reset();
 		_evaluationStrategy.Reset();
 
+#if DEBUG
+		Logger.Log("Сбросили статистику");
+#endif
+
 		var population = _populationGenerator.Generate(_core.Parameters.PopulationSize).ToList();
+
+#if DEBUG
+		Logger.Log($"Начальная популяция:\n{string.Join('\n', population)}");
+#endif
 
 		while (_evaluationStrategy.ShouldWork(this))
 		{
+#if DEBUG
+			Logger.Log("Продолжаем работу");
+			Logger.Log("Сейчас имеем:");
+			Logger.Log(string.Join(
+				'\n',
+				population.Zip(population.Select(Phenotype), (genotype, phenotype) => $"*) {genotype} - {phenotype}"))
+			);
+			Logger.Log("Формируем пары");
+#endif
+
 			var pairs = _pairSelector.Select(population).ToList();
+
+#if DEBUG
+			Logger.Log("Проводим итерацию");
+#endif
+
 			population = _core.PerformIteration(population, pairs, Phenotype);
 
 			Statistics.Save(population);
 		}
+
+#if DEBUG
+		Logger.End();
+#endif
 
 		return Services.FindBest(population, Phenotype);
 	}
