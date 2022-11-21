@@ -241,6 +241,108 @@ public sealed class TestCases
 		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(g => ga.Phenotype(g))}");
 		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(g => ga.Phenotype(g))}");
 	}
+	
+	/// Настройка 5:
+	/// - Параметы:
+	/// -- Размер популяции              : 6
+	/// -- Шанс кроссовера               : 95%
+	/// -- Шанс мутации                  : 5%
+	/// -- Процент замен при селекции    : 50%
+	/// -- Элитарная стратегия           : false
+	///
+	/// - Модули
+	/// -- Генерация начальной популяции : на основе рандомизированного жадного алгоритма
+	/// -- Выбор пар родителей           : случайно
+	/// -- Кроссовер                     : ox
+	/// -- Мутация                       : точечная
+	/// -- Селекция                      : ранговая с выбором без возвращения
+	///
+	/// - Завершение работы              : при достижении 5 поколения
+	/// - Статистика                     : каждый, макс. 5
+	public void Test5(uint runCount)
+	{
+		var ga = new GaManager<Route>(
+			_tsp,
+			new GaParameters(
+				PopulationSize: POPULATION_SIZE,
+				CrossoverRate: CROSSOVER_RATE,
+				MutationRate: MUTATION_RATE,
+				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
+				UseElitistStrategy: DONT_USE_ELITISM),
+			new GaModules(
+				new ProblemSolverPopulationGenerator<Route, Tsp>(
+					_tsp,
+					new RandomizedClosestNeighbourMethod()),
+				new RandomPairSelector(),
+				new CxCrossover(),
+				new Inversion(),
+				new LinearRankScheme(new WithoutReturnCopy())),
+			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
+			new StatisticsCommittee(1, 5)
+		);
+
+		var bests = new Genotype[runCount];
+		for (var i = 0; i < runCount; i++)
+		{
+			bests[i] = ga.FindBestGenotype();
+		}
+
+		Console.WriteLine($"Статистика теста 5 за {runCount} запусков:");
+		Console.WriteLine($"*) Лучший из лучших: {Services.FindBest(bests, ga.Phenotype)}");
+		Console.WriteLine($"*) Среднее значение приспособленности: {bests.Average(g => ga.Phenotype(g))}");
+		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(g => ga.Phenotype(g))}");
+		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(g => ga.Phenotype(g))}");
+	}
+	
+	/// Настройка 6:
+	/// - Параметы:
+	/// -- Размер популяции              : 6
+	/// -- Шанс кроссовера               : 95%
+	/// -- Шанс мутации                  : 5%
+	/// -- Процент замен при селекции    : 50%
+	/// -- Элитарная стратегия           : false
+	///
+	/// - Модули
+	/// -- Генерация начальной популяции : случайно, корректно
+	/// -- Выбор пар родителей           : случайно
+	/// -- Кроссовер                     : ox
+	/// -- Мутация                       : инверсия
+	/// -- Селекция                      : β-турнир с параметром 2
+	///
+	/// - Завершение работы              : если приспособленность не улучшается 5 поколений
+	/// - Статистика                     : каждый, макс. 5
+	public void Test6(int runCount)
+	{
+		var ga = new GaManager<Route>(
+			_tsp,
+			new GaParameters(
+				PopulationSize: POPULATION_SIZE,
+				CrossoverRate: CROSSOVER_RATE,
+				MutationRate: MUTATION_RATE,
+				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
+				UseElitistStrategy: DONT_USE_ELITISM),
+			new GaModules(
+				PopulationGenerator: new RandomValidPopulationGenerator<Route, Tsp>(_tsp),
+				PairSelector: new RandomPairSelector(),
+				Crossover: new OxCrossover(),
+				Mutation: new Inversion(),
+				Selection: new BetaTournament(2)),
+			new NoProgressEvaluator<Route>(5),
+			new StatisticsCommittee(1, 5)
+		);
+
+		var bests = new Genotype[runCount];
+		for (var i = 0; i < runCount; i++)
+		{
+			bests[i] = ga.FindBestGenotype();
+		}
+
+		Console.WriteLine($"Статистика теста 6 за {runCount} запусков:");
+		Console.WriteLine($"*) Лучший из лучших: {Services.FindBest(bests, ga.Phenotype)}");
+		Console.WriteLine($"*) Среднее значение приспособленности: {bests.Average(g => ga.Phenotype(g))}");
+		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(g => ga.Phenotype(g))}");
+		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(g => ga.Phenotype(g))}");
+	}
 
 	private static (int, IEnumerable<int>) FromFile()
 	{

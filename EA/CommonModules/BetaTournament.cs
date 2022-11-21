@@ -31,6 +31,7 @@ public sealed class BetaTournament : ISelection
 	private Genotype Round(IReadOnlyList<Genotype> fund, Func<Genotype, int> phenotype)
 	{
 		var fighters = new List<Genotype>();
+		// не нужно ли добавить && i < fund.Count?
 		for (var i = 0; i < _beta; i++)
 		{
 			fighters.Add(fund[Randomness.GetInt(fund.Count)]);
