@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Common;
 
@@ -31,7 +32,7 @@ public static class Roulette
 			}
 		}
 
-		throw new Exception($"[{nameof(Roulette)}/{nameof(Spin)}] Случайное число оказалось вне отрезка");
+		throw new UnreachableException($"[{nameof(Roulette)}/{nameof(Spin)}] Случайное число оказалось вне отрезка");
 	}
 
 	public static T Spin<T>(IList<T> items, IList<double> weights)

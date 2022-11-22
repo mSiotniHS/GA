@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using EA.Core;
 
 namespace EA.Helpers;
@@ -28,6 +29,6 @@ public static class Services
 
 		fitness = bestFitness;
 
-		return best ?? throw new Exception($"[{nameof(Services)}/{nameof(FindBest)}] Не удалось найти лучшего");
+		return best ?? throw new UnreachableException($"[{nameof(Services)}/{nameof(FindBest)}] Не удалось найти лучшего");
 	}
 }
