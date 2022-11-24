@@ -19,6 +19,7 @@ public sealed class GaManager<TBaseType>
 	private readonly IEvaluationStrategy<TBaseType> _evaluationStrategy;
 
 	public GaManager(
+		IRng rng,
 		IGaProblem<TBaseType> baseProblem,
 		GaParameters parameters,
 		GaModules modules,
@@ -28,7 +29,7 @@ public sealed class GaManager<TBaseType>
 		if (parameters.PopulationSize % 2 != 0)
 			throw new ArgumentException($"[{nameof(GaManager<TBaseType>)}/cons] Размер популяции должен быть чётным числом");
 
-		_core = new GaCore(parameters, modules.Crossover, modules.Mutation, modules.Selection);
+		_core = new GaCore(rng, parameters, modules.Crossover, modules.Mutation, modules.Selection);
 		_baseProblem = baseProblem;
 		_evaluationStrategy = evaluationStrategy;
 		_pairSelector = modules.PairSelector;

@@ -13,13 +13,17 @@ internal sealed class GaCore
 	private readonly double[] _crossoverWeights;
 	private readonly uint _newcomerCount;
 
+	private readonly IRng _rng;
+
 	private readonly ICrossover _crossover;
 	private readonly IMutation _mutation;
 	private readonly ISelection _selection;
 	public GaParameters Parameters { get; }
 
-	public GaCore(GaParameters parameters, ICrossover crossover, IMutation mutation, ISelection selection)
+	public GaCore(IRng rng, GaParameters parameters, ICrossover crossover, IMutation mutation, ISelection selection)
 	{
+		_rng = rng;
+
 		Parameters = parameters;
 		_crossover = crossover;
 		_mutation = mutation;
@@ -54,7 +58,7 @@ internal sealed class GaCore
 		var children = new List<Genotype>();
 		foreach (var parentPair in parents)
 		{
-			var toGiveBirth = Roulette.Spin(Items, _crossoverWeights);
+			var toGiveBirth = Roulette.Spin(_rng, Items, _crossoverWeights);
 			if (!toGiveBirth) continue;
 
 			var (parent1, parent2) = parentPair;
@@ -69,7 +73,7 @@ internal sealed class GaCore
 		var mutants = new List<Genotype>();
 		foreach (var child in children)
 		{
-			var toMutate = Roulette.Spin(Items, _mutationWeights);
+			var toMutate = Roulette.Spin(_rng, Items, _mutationWeights);
 			if (!toMutate) continue;
 
 			mutants.Add(_mutation.Perform(child));
@@ -112,7 +116,7 @@ internal sealed class GaCore
 
 		for (var i = 0; i < _newcomerCount; i++)
 		{
-			toBeSaved.RemoveAt(Randomness.GetInt(toBeSaved.Count));
+			toBeSaved.RemoveAt(_rng.GetInt(toBeSaved.Count));
 		}
 
 		newPopulation.AddRange(toBeSaved);

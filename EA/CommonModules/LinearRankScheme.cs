@@ -12,10 +12,10 @@ public sealed class LinearRankScheme : ISelection
 	private readonly double _lowerBound;
 	private readonly ICopyStrategy _copyStrategy;
 
-	public LinearRankScheme(ICopyStrategy copyStrategy)
+	public LinearRankScheme(IRng rng, ICopyStrategy copyStrategy)
 	{
 		// in (1, 2]
-		_upperBound = 2 - Randomness.GetDouble();
+		_upperBound = 2 - rng.GetDouble();
 		_lowerBound = 2 - _upperBound;
 
 		_copyStrategy = copyStrategy;

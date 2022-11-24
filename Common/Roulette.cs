@@ -6,7 +6,7 @@ namespace Common;
 
 public static class Roulette
 {
-	public static T Spin<T>(IList<T> items, IList<double> weights, out int idx)
+	public static T Spin<T>(IRng rng, IList<T> items, IList<double> weights, out int idx)
 	{
 		if (items.Count != weights.Count)
 		{
@@ -19,7 +19,7 @@ public static class Roulette
 			totalWeight += weights[i];
 		}
 
-		var randomNum = Randomness.GetDouble() * totalWeight;
+		var randomNum = rng.GetDouble() * totalWeight;
 		var currentSector = 0.0;
 
 		for (var i = 0; i < items.Count; i++)
@@ -35,8 +35,8 @@ public static class Roulette
 		throw new UnreachableException($"[{nameof(Roulette)}/{nameof(Spin)}] Случайное число оказалось вне отрезка");
 	}
 
-	public static T Spin<T>(IList<T> items, IList<double> weights)
+	public static T Spin<T>(IRng rng, IList<T> items, IList<double> weights)
 	{
-		return Spin(items, weights, out _);
+		return Spin(rng, items, weights, out _);
 	}
 }

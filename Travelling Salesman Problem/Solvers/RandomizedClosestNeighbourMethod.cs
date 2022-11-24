@@ -7,10 +7,17 @@ namespace Travelling_Salesman_Problem.Solvers;
 
 public sealed class RandomizedClosestNeighbourMethod : IProblemSolver<Route, Tsp>
 {
+	private readonly IRng _rng;
+
+	public RandomizedClosestNeighbourMethod(IRng rng)
+	{
+		_rng = rng;
+	}
+
 	public Route FindSolution(Tsp problem)
 	{
 		var distances = problem.Distances;
-		var firstCity = Randomness.GetInt(distances.CityCount);
+		var firstCity = _rng.GetInt(distances.CityCount);
 
 		var route = new Route {firstCity};
 
@@ -30,7 +37,7 @@ public sealed class RandomizedClosestNeighbourMethod : IProblemSolver<Route, Tsp
 		return route;
 	}
 
-	private static int NextCity(DistanceMatrix distances, int currentCity, IList<int> unvisitedCities)
+	private int NextCity(DistanceMatrix distances, int currentCity, IList<int> unvisitedCities)
 	{
 		var weights = new double[unvisitedCities.Count];
 		for (var i = 0; i < unvisitedCities.Count; i++)
@@ -39,6 +46,6 @@ public sealed class RandomizedClosestNeighbourMethod : IProblemSolver<Route, Tsp
 			weights[i] = (1 / (double) distances[currentCity, unvisitedCity]);
 		}
 
-		return Roulette.Spin(unvisitedCities, weights);
+		return Roulette.Spin(_rng, unvisitedCities, weights);
 	}
 }

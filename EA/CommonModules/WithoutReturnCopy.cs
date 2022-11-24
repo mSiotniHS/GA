@@ -7,6 +7,13 @@ namespace EA.CommonModules;
 
 public sealed class WithoutReturnCopy : ICopyStrategy
 {
+	private readonly IRng _rng;
+
+	public WithoutReturnCopy(IRng rng)
+	{
+		_rng = rng;
+	}
+
 	public IEnumerable<Genotype> Copy(IList<Genotype> fund, IList<double> weights, uint count)
 	{
 #if DEBUG
@@ -19,7 +26,7 @@ public sealed class WithoutReturnCopy : ICopyStrategy
 
 		for (var i = 0; i < count; i++)
 		{
-			yield return Roulette.Spin(copiedFund, copiedWeights, out var idx);
+			yield return Roulette.Spin(_rng, copiedFund, copiedWeights, out var idx);
 
 #if DEBUG
 			Logger.Log($"Выбрали {copiedFund[idx]}");

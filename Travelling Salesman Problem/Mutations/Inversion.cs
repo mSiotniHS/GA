@@ -5,10 +5,17 @@ namespace Travelling_Salesman_Problem.Mutations;
 
 public sealed class Inversion : IMutation
 {
+	private readonly IRng _rng;
+
+	public Inversion(IRng rng)
+	{
+		_rng = rng;
+	}
+
 	public Genotype Perform(Genotype genotype)
 	{
-		var startIdx = Randomness.GetInt(genotype.Length - 1); // -1, чтобы хотя бы 2 гена было
-		var endIdx = Randomness.GetInt(startIdx + 2, genotype.Length + 1);
+		var startIdx = _rng.GetInt(genotype.Length - 1); // -1, чтобы хотя бы 2 гена было
+		var endIdx = _rng.GetInt(startIdx + 2, genotype.Length + 1);
 
 		return PurePerform(genotype, startIdx, endIdx);
 	}

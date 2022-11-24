@@ -16,8 +16,12 @@ public sealed class Tsp : IGaProblem<Route>, IRandomSolutionGenerator<Route>
 	public ICoder<Route, Genotype> Coder { get; }
 	public ICriterion<Route> Criterion { get; }
 
-	public Tsp(DistanceMatrix distances)
+	private readonly IRng _rng;
+
+	public Tsp(IRng rng, DistanceMatrix distances)
 	{
+		_rng = rng;
+
 		Distances = distances;
 		Coder = new BasicRouteCoder();
 		Criterion = new TspCriterion(distances);
@@ -27,7 +31,7 @@ public sealed class Tsp : IGaProblem<Route>, IRandomSolutionGenerator<Route>
 	{
 		return Enumerable
 			.Range(0, Distances.CityCount)
-			.OrderBy(_ => Randomness.GetInt())
+			.OrderBy(_ => _rng.GetInt())
 			.ToList();
 	}
 }

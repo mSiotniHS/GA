@@ -7,6 +7,13 @@ namespace EA.CommonModules;
 
 public sealed class RandomPairSelector : IPairSelector
 {
+	private readonly IRng _rng;
+
+	public RandomPairSelector(IRng rng)
+	{
+		_rng = rng;
+	}
+
 	public IEnumerable<(Genotype, Genotype)> Select(IEnumerable<Genotype> population)
 	{
 #if DEBUG
@@ -22,11 +29,11 @@ public sealed class RandomPairSelector : IPairSelector
 
 		while (populationList.Count != 0)
 		{
-			var firstIdx = Randomness.GetInt(populationList.Count);
+			var firstIdx = _rng.GetInt(populationList.Count);
 			var first = populationList[firstIdx];
 			populationList.RemoveAt(firstIdx);
 
-			var secondIdx = Randomness.GetInt(populationList.Count);
+			var secondIdx = _rng.GetInt(populationList.Count);
 			var second = populationList[secondIdx];
 			populationList.RemoveAt(secondIdx);
 
