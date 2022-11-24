@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Common;
 using EA;
 using EA.CommonModules;
 using EA.Core;
@@ -26,12 +27,14 @@ public sealed class TestCases
 	private const bool DONT_USE_ELITISM = false;
 	private const int MAX_GENERATIONS = 5;
 
+	private static readonly Rng Rng = new();
+
 	public TestCases()
 	{
 		var (cityCount, rawDistances) = FromFile();
 		var distances = new DistanceMatrix(cityCount, rawDistances.ToArray());
 
-		_tsp = new Tsp(distances);
+		_tsp = new Tsp(Rng, distances);
 	}
 
 	/// Настройка 1:
@@ -54,6 +57,7 @@ public sealed class TestCases
 	public void Test1(int runCount)
 	{
 		var ga = new GaManager<Route>(
+			Rng,
 			_tsp,
 			new GaParameters(
 				PopulationSize: POPULATION_SIZE,
@@ -64,11 +68,11 @@ public sealed class TestCases
 			new GaModules(
 				PopulationGenerator: new ProblemSolverPopulationGenerator<Route, Tsp>(
 					_tsp,
-					new RandomizedClosestNeighbourMethod()),
-				PairSelector: new RandomPairSelector(),
-				Crossover: new OxCrossover(),
-				Mutation: new PointMutation(),
-				Selection: new BetaTournament(2)),
+					new RandomizedClosestNeighbourMethod(Rng)),
+				PairSelector: new RandomPairSelector(Rng),
+				Crossover: new OxCrossover(Rng),
+				Mutation: new PointMutation(Rng),
+				Selection: new BetaTournament(Rng, 2)),
 			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
 			new StatisticsCommittee(1, 5)
 		);
@@ -106,6 +110,7 @@ public sealed class TestCases
 	public void Test2(uint runCount)
 	{
 		var ga = new GaManager<Route>(
+			Rng,
 			_tsp,
 			new GaParameters(
 				PopulationSize: POPULATION_SIZE,
@@ -116,11 +121,11 @@ public sealed class TestCases
 			new GaModules(
 				new ProblemSolverPopulationGenerator<Route, Tsp>(
 					_tsp,
-					new RandomizedClosestNeighbourMethod()),
-				new RandomPairSelector(),
-				new OxCrossover(),
-				new PointMutation(),
-				new BetaTournament(2)),
+					new RandomizedClosestNeighbourMethod(Rng)),
+				new RandomPairSelector(Rng),
+				new OxCrossover(Rng),
+				new PointMutation(Rng),
+				new BetaTournament(Rng, 2)),
 			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
 			new StatisticsCommittee(1, 5)
 		);
@@ -158,6 +163,7 @@ public sealed class TestCases
 	public void Test3(uint runCount)
 	{
 		var ga = new GaManager<Route>(
+			Rng,
 			_tsp,
 			new GaParameters(
 				PopulationSize: POPULATION_SIZE,
@@ -168,11 +174,11 @@ public sealed class TestCases
 			new GaModules(
 				new ProblemSolverPopulationGenerator<Route, Tsp>(
 					_tsp,
-					new RandomizedClosestNeighbourMethod()),
-				new RandomPairSelector(),
-				new OxCrossover(),
-				new PointMutation(),
-				new BetaTournament(2)),
+					new RandomizedClosestNeighbourMethod(Rng)),
+				new RandomPairSelector(Rng),
+				new OxCrossover(Rng),
+				new PointMutation(Rng),
+				new BetaTournament(Rng, 2)),
 			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
 			new StatisticsCommittee(1, 5)
 		);
@@ -210,6 +216,7 @@ public sealed class TestCases
 	public void Test4(uint runCount)
 	{
 		var ga = new GaManager<Route>(
+			Rng,
 			_tsp,
 			new GaParameters(
 				PopulationSize: POPULATION_SIZE,
@@ -220,11 +227,11 @@ public sealed class TestCases
 			new GaModules(
 				new ProblemSolverPopulationGenerator<Route, Tsp>(
 					_tsp,
-					new RandomizedClosestNeighbourMethod()),
-				new RandomPairSelector(),
+					new RandomizedClosestNeighbourMethod(Rng)),
+				new RandomPairSelector(Rng),
 				new CxCrossover(),
-				new Inversion(),
-				new BetaTournament(2)),
+				new Inversion(Rng),
+				new BetaTournament(Rng, 2)),
 			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
 			new StatisticsCommittee(1, 5)
 		);
@@ -241,7 +248,7 @@ public sealed class TestCases
 		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(g => ga.Phenotype(g))}");
 		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(g => ga.Phenotype(g))}");
 	}
-	
+
 	/// Настройка 5:
 	/// - Параметы:
 	/// -- Размер популяции              : 6
@@ -262,6 +269,7 @@ public sealed class TestCases
 	public void Test5(uint runCount)
 	{
 		var ga = new GaManager<Route>(
+			Rng,
 			_tsp,
 			new GaParameters(
 				PopulationSize: POPULATION_SIZE,
@@ -272,11 +280,11 @@ public sealed class TestCases
 			new GaModules(
 				new ProblemSolverPopulationGenerator<Route, Tsp>(
 					_tsp,
-					new RandomizedClosestNeighbourMethod()),
-				new RandomPairSelector(),
+					new RandomizedClosestNeighbourMethod(Rng)),
+				new RandomPairSelector(Rng),
 				new CxCrossover(),
-				new Inversion(),
-				new LinearRankScheme(new WithoutReturnCopy())),
+				new Inversion(Rng),
+				new LinearRankScheme(Rng, new WithoutReturnCopy(Rng))),
 			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
 			new StatisticsCommittee(1, 5)
 		);
@@ -293,7 +301,7 @@ public sealed class TestCases
 		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(g => ga.Phenotype(g))}");
 		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(g => ga.Phenotype(g))}");
 	}
-	
+
 	/// Настройка 6:
 	/// - Параметы:
 	/// -- Размер популяции              : 6
@@ -314,6 +322,7 @@ public sealed class TestCases
 	public void Test6(int runCount)
 	{
 		var ga = new GaManager<Route>(
+			Rng,
 			_tsp,
 			new GaParameters(
 				PopulationSize: POPULATION_SIZE,
@@ -323,10 +332,10 @@ public sealed class TestCases
 				UseElitistStrategy: DONT_USE_ELITISM),
 			new GaModules(
 				PopulationGenerator: new RandomValidPopulationGenerator<Route, Tsp>(_tsp),
-				PairSelector: new RandomPairSelector(),
-				Crossover: new OxCrossover(),
-				Mutation: new Inversion(),
-				Selection: new BetaTournament(2)),
+				PairSelector: new RandomPairSelector(Rng),
+				Crossover: new OxCrossover(Rng),
+				Mutation: new Inversion(Rng),
+				Selection: new BetaTournament(Rng, 2)),
 			new NoProgressEvaluator<Route>(5),
 			new StatisticsCommittee(1, 5)
 		);
