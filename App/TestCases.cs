@@ -25,7 +25,8 @@ public sealed class TestCases
 	private const double MUTATION_RATE = 0.05;
 	private const double GENERATIONAL_OVERLAP_RATIO = 0.5;
 	private const bool DONT_USE_ELITISM = false;
-	private const int MAX_GENERATIONS = 5;
+	private static readonly IEvaluationStrategy<Route> EVALUATION_STRATEGY = new GenerationCountEvaluator<Route>(5);
+	// private static readonly IEvaluationStrategy<Route> EVALUATION_STRATEGY = new NoProgressEvaluator<Route>(5);
 
 	private static readonly Rng Rng = new();
 
@@ -73,147 +74,14 @@ public sealed class TestCases
 				Crossover: new OxCrossover(Rng),
 				Mutation: new PointMutation(Rng),
 				Selection: new BetaTournament(Rng, 2)),
-			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
+			EVALUATION_STRATEGY,
 			new StatisticsCommittee(1, 5)
 		);
 
-		var bests = new Genotype[runCount];
-		for (var i = 0; i < runCount; i++)
-		{
-			bests[i] = ga.FindBestGenotype();
-		}
-
-		Console.WriteLine($"Статистика теста 1 за {runCount} запусков:");
-		Console.WriteLine($"*) Лучший из лучших: {Services.FindBest(bests, ga.Phenotype)}");
-		Console.WriteLine($"*) Среднее значение приспособленности: {bests.Average(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(g => ga.Phenotype(g))}");
+		RunTest(ga, runCount, "Эталонный");
 	}
 
-	/// Настройка 2:
-	/// - Параметы:
-	/// -- Размер популяции              : 6
-	/// -- Шанс кроссовера               : 95%
-	/// -- Шанс мутации                  : 5%
-	/// -- Процент замен при селекции    : 50%
-	/// -- Элитарная стратегия           : true
-	///
-	/// - Модули
-	/// -- Генерация начальной популяции : на основе рандомизированного жадного алгоритма
-	/// -- Выбор пар родителей           : случайно
-	/// -- Кроссовер                     : ox
-	/// -- Мутация                       : точечная
-	/// -- Селекция                      : β-турнир с параметром 2
-	///
-	/// - Завершение работы              : при достижении 5 поколения
-	/// - Статистика                     : каждый, макс. 5
-	public void Test2(uint runCount)
-	{
-		var ga = new GaManager<Route>(
-			Rng,
-			_tsp,
-			new GaParameters(
-				PopulationSize: POPULATION_SIZE,
-				CrossoverRate: CROSSOVER_RATE,
-				MutationRate: MUTATION_RATE,
-				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
-				UseElitistStrategy: true),
-			new GaModules(
-				new ProblemSolverPopulationGenerator<Route, Tsp>(
-					_tsp,
-					new RandomizedClosestNeighbourMethod(Rng)),
-				new RandomPairSelector(Rng),
-				new OxCrossover(Rng),
-				new PointMutation(Rng),
-				new BetaTournament(Rng, 2)),
-			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
-			new StatisticsCommittee(1, 5)
-		);
-
-		var bests = new Genotype[runCount];
-		for (var i = 0; i < runCount; i++)
-		{
-			bests[i] = ga.FindBestGenotype();
-		}
-
-		Console.WriteLine($"Статистика теста 2 за {runCount} запусков:");
-		Console.WriteLine($"*) Лучший из лучших: {Services.FindBest(bests, ga.Phenotype)}");
-		Console.WriteLine($"*) Среднее значение приспособленности: {bests.Average(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(g => ga.Phenotype(g))}");
-	}
-
-	/// Настройка 3:
-	/// - Параметы:
-	/// -- Размер популяции              : 6
-	/// -- Шанс кроссовера               : 50%
-	/// -- Шанс мутации                  : 50%
-	/// -- Процент замен при селекции    : 50%
-	/// -- Элитарная стратегия           : false
-	///
-	/// - Модули
-	/// -- Генерация начальной популяции : на основе рандомизированного жадного алгоритма
-	/// -- Выбор пар родителей           : случайно
-	/// -- Кроссовер                     : ox
-	/// -- Мутация                       : точечная
-	/// -- Селекция                      : β-турнир с параметром 2
-	///
-	/// - Завершение работы              : при достижении 5 поколения
-	/// - Статистика                     : каждый, макс. 5
-	public void Test3(uint runCount)
-	{
-		var ga = new GaManager<Route>(
-			Rng,
-			_tsp,
-			new GaParameters(
-				PopulationSize: POPULATION_SIZE,
-				CrossoverRate: .5,
-				MutationRate: .5,
-				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
-				UseElitistStrategy: DONT_USE_ELITISM),
-			new GaModules(
-				new ProblemSolverPopulationGenerator<Route, Tsp>(
-					_tsp,
-					new RandomizedClosestNeighbourMethod(Rng)),
-				new RandomPairSelector(Rng),
-				new OxCrossover(Rng),
-				new PointMutation(Rng),
-				new BetaTournament(Rng, 2)),
-			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
-			new StatisticsCommittee(1, 5)
-		);
-
-		var bests = new Genotype[runCount];
-		for (var i = 0; i < runCount; i++)
-		{
-			bests[i] = ga.FindBestGenotype();
-		}
-
-		Console.WriteLine($"Статистика теста 3 за {runCount} запусков:");
-		Console.WriteLine($"*) Лучший из лучших: {Services.FindBest(bests, ga.Phenotype)}");
-		Console.WriteLine($"*) Среднее значение приспособленности: {bests.Average(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(g => ga.Phenotype(g))}");
-	}
-
-	/// Настройка 4:
-	/// - Параметы:
-	/// -- Размер популяции              : 6
-	/// -- Шанс кроссовера               : 95%
-	/// -- Шанс мутации                  : 5%
-	/// -- Процент замен при селекции    : 50%
-	/// -- Элитарная стратегия           : false
-	///
-	/// - Модули
-	/// -- Генерация начальной популяции : на основе рандомизированного жадного алгоритма
-	/// -- Выбор пар родителей           : случайно
-	/// -- Кроссовер                     : cx
-	/// -- Мутация                       : инверсия
-	/// -- Селекция                      : β-турнир с параметром 2
-	///
-	/// - Завершение работы              : при достижении 5 поколения
-	/// - Статистика                     : каждый, макс. 5
-	public void Test4(uint runCount)
+	public void Test2(int runCount)
 	{
 		var ga = new GaManager<Route>(
 			Rng,
@@ -225,48 +93,21 @@ public sealed class TestCases
 				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
 				UseElitistStrategy: DONT_USE_ELITISM),
 			new GaModules(
-				new ProblemSolverPopulationGenerator<Route, Tsp>(
+				PopulationGenerator: new ProblemSolverPopulationGenerator<Route, Tsp>(
 					_tsp,
 					new RandomizedClosestNeighbourMethod(Rng)),
-				new RandomPairSelector(Rng),
-				new CxCrossover(),
-				new Inversion(Rng),
-				new BetaTournament(Rng, 2)),
-			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
+				PairSelector: new OutbreedingPairSelector(10),
+				Crossover: new OxCrossover(Rng),
+				Mutation: new PointMutation(Rng),
+				Selection: new BetaTournament(Rng, 2)),
+			EVALUATION_STRATEGY,
 			new StatisticsCommittee(1, 5)
 		);
 
-		var bests = new Genotype[runCount];
-		for (var i = 0; i < runCount; i++)
-		{
-			bests[i] = ga.FindBestGenotype();
-		}
-
-		Console.WriteLine($"Статистика теста 4 за {runCount} запусков:");
-		Console.WriteLine($"*) Лучший из лучших: {Services.FindBest(bests, ga.Phenotype)}");
-		Console.WriteLine($"*) Среднее значение приспособленности: {bests.Average(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(g => ga.Phenotype(g))}");
+		RunTest(ga, runCount, "Выбор пар");
 	}
 
-	/// Настройка 5:
-	/// - Параметы:
-	/// -- Размер популяции              : 6
-	/// -- Шанс кроссовера               : 95%
-	/// -- Шанс мутации                  : 5%
-	/// -- Процент замен при селекции    : 50%
-	/// -- Элитарная стратегия           : false
-	///
-	/// - Модули
-	/// -- Генерация начальной популяции : на основе рандомизированного жадного алгоритма
-	/// -- Выбор пар родителей           : случайно
-	/// -- Кроссовер                     : ox
-	/// -- Мутация                       : точечная
-	/// -- Селекция                      : ранговая с выбором без возвращения
-	///
-	/// - Завершение работы              : при достижении 5 поколения
-	/// - Статистика                     : каждый, макс. 5
-	public void Test5(uint runCount)
+	public void Test3(int runCount)
 	{
 		var ga = new GaManager<Route>(
 			Rng,
@@ -278,48 +119,21 @@ public sealed class TestCases
 				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
 				UseElitistStrategy: DONT_USE_ELITISM),
 			new GaModules(
-				new ProblemSolverPopulationGenerator<Route, Tsp>(
+				PopulationGenerator: new ProblemSolverPopulationGenerator<Route, Tsp>(
 					_tsp,
 					new RandomizedClosestNeighbourMethod(Rng)),
-				new RandomPairSelector(Rng),
-				new CxCrossover(),
-				new Inversion(Rng),
-				new LinearRankScheme(Rng, new WithoutReturnCopy(Rng))),
-			new GenerationCountEvaluator<Route>(MAX_GENERATIONS),
+				PairSelector: new RandomPairSelector(Rng),
+				Crossover: new CxCrossover(),
+				Mutation: new PointMutation(Rng),
+				Selection: new BetaTournament(Rng, 2)),
+			EVALUATION_STRATEGY,
 			new StatisticsCommittee(1, 5)
 		);
 
-		var bests = new Genotype[runCount];
-		for (var i = 0; i < runCount; i++)
-		{
-			bests[i] = ga.FindBestGenotype();
-		}
-
-		Console.WriteLine($"Статистика теста 5 за {runCount} запусков:");
-		Console.WriteLine($"*) Лучший из лучших: {Services.FindBest(bests, ga.Phenotype)}");
-		Console.WriteLine($"*) Среднее значение приспособленности: {bests.Average(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(g => ga.Phenotype(g))}");
+		RunTest(ga, runCount, "Кроссовер");
 	}
 
-	/// Настройка 6:
-	/// - Параметы:
-	/// -- Размер популяции              : 6
-	/// -- Шанс кроссовера               : 95%
-	/// -- Шанс мутации                  : 5%
-	/// -- Процент замен при селекции    : 50%
-	/// -- Элитарная стратегия           : false
-	///
-	/// - Модули
-	/// -- Генерация начальной популяции : случайно, корректно
-	/// -- Выбор пар родителей           : случайно
-	/// -- Кроссовер                     : ox
-	/// -- Мутация                       : инверсия
-	/// -- Селекция                      : β-турнир с параметром 2
-	///
-	/// - Завершение работы              : если приспособленность не улучшается 5 поколений
-	/// - Статистика                     : каждый, макс. 5
-	public void Test6(int runCount)
+	public void Test4(int runCount)
 	{
 		var ga = new GaManager<Route>(
 			Rng,
@@ -331,26 +145,65 @@ public sealed class TestCases
 				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
 				UseElitistStrategy: DONT_USE_ELITISM),
 			new GaModules(
-				PopulationGenerator: new RandomValidPopulationGenerator<Route, Tsp>(_tsp),
+				PopulationGenerator: new ProblemSolverPopulationGenerator<Route, Tsp>(
+					_tsp,
+					new RandomizedClosestNeighbourMethod(Rng)),
 				PairSelector: new RandomPairSelector(Rng),
 				Crossover: new OxCrossover(Rng),
 				Mutation: new Inversion(Rng),
 				Selection: new BetaTournament(Rng, 2)),
-			new NoProgressEvaluator<Route>(5),
+			EVALUATION_STRATEGY,
 			new StatisticsCommittee(1, 5)
 		);
 
+		RunTest(ga, runCount, "Мутация");
+	}
+
+	public void Test5(int runCount)
+	{
+		var ga = new GaManager<Route>(
+			Rng,
+			_tsp,
+			new GaParameters(
+				PopulationSize: POPULATION_SIZE,
+				CrossoverRate: CROSSOVER_RATE,
+				MutationRate: MUTATION_RATE,
+				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
+				UseElitistStrategy: DONT_USE_ELITISM),
+			new GaModules(
+				PopulationGenerator: new ProblemSolverPopulationGenerator<Route, Tsp>(
+					_tsp,
+					new RandomizedClosestNeighbourMethod(Rng)),
+				PairSelector: new RandomPairSelector(Rng),
+				Crossover: new OxCrossover(Rng),
+				Mutation: new PointMutation(Rng),
+				Selection: new LinearRankScheme(Rng, new WithoutReturnCopy(Rng))),
+			EVALUATION_STRATEGY,
+			new StatisticsCommittee(1, 5)
+		);
+
+		RunTest(ga, runCount, "Селекция");
+	}
+
+	private static void RunTest(GaManager<Route> ga, int runCount, string testName)
+	{
 		var bests = new Genotype[runCount];
+		var generations = new int[runCount];
+
 		for (var i = 0; i < runCount; i++)
 		{
 			bests[i] = ga.FindBestGenotype();
+			generations[i] = (int) ga.Statistics.TotalGenerationCount;
 		}
 
-		Console.WriteLine($"Статистика теста 6 за {runCount} запусков:");
+		Console.WriteLine($"Статистика теста {testName} за {runCount} запусков:");
 		Console.WriteLine($"*) Лучший из лучших: {Services.FindBest(bests, ga.Phenotype)}");
-		Console.WriteLine($"*) Среднее значение приспособленности: {bests.Average(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(g => ga.Phenotype(g))}");
-		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(g => ga.Phenotype(g))}");
+		Console.WriteLine($"*) Среднее значение приспособленности: {bests.Average(ga.Phenotype)}");
+		Console.WriteLine($"*) Лучшая приспособленность: {bests.Min(ga.Phenotype)}");
+		Console.WriteLine($"*) Худшая приспособленность: {bests.Max(ga.Phenotype)}");
+		Console.WriteLine($"*) Среднее количество поколений: {generations.Average()}");
+
+		Console.WriteLine("\n");
 	}
 
 	private static (int, IEnumerable<int>) FromFile()
