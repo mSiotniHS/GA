@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Common;
 
@@ -13,11 +14,7 @@ public static class Roulette
 			throw new ArgumentException($"[{nameof(Roulette)}/{nameof(Spin)}] Числа предметов и весов должны совпадать");
 		}
 
-		var totalWeight = 0.0;
-		for (var i = 0; i < weights.Count; i++)
-		{
-			totalWeight += weights[i];
-		}
+		var totalWeight = weights.Sum();
 
 		var randomNum = rng.GetDouble() * totalWeight;
 		var currentSector = 0.0;
