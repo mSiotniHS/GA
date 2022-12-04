@@ -47,12 +47,10 @@ public record Genotype
 			var value = GetNonNull(i);
 			var otherValue = other.GetNonNull(i);
 
-			if (value is null || otherValue is null)
+			if (value != otherValue)
 			{
-				throw new Exception($"[{nameof(Genotype)}/{nameof(DistanceTo)}] Один из генотипов не определён полностью");
+				distance++;
 			}
-
-			distance += Math.Abs(value.Value - otherValue.Value);
 		}
 
 		return distance;
