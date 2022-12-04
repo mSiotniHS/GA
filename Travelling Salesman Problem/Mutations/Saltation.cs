@@ -14,11 +14,19 @@ public sealed class Saltation : IMutation
 
 	public Genotype Perform(Genotype genotype)
 	{
+		Logger.Begin(nameof(Saltation), nameof(Perform));
+		Logger.Log($"Получили генотип {genotype}");
+
 		var startIdx = _rng.GetInt(genotype.Length - 1);
 		var endIdx = _rng.GetInt(startIdx + 1, genotype.Length);
 
+		Logger.Log($"Меняем местами индексы {startIdx} и {endIdx}");
+
 		var newGenotype = new Genotype(genotype);
 		(newGenotype[startIdx], newGenotype[endIdx]) = (newGenotype[endIdx], newGenotype[startIdx]);
+
+		Logger.Log($"Мутированный генотип: {newGenotype}");
+		Logger.End();
 
 		return newGenotype;
 	}
