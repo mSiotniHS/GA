@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Common;
@@ -8,44 +10,43 @@ public static class Logger
 {
 	private static readonly StreamWriter Fs = new("log.txt", true, Encoding.UTF8);
 
-	private static string _className = string.Empty;
-	private static string _methodName = string.Empty;
-	private static uint _deepness = 0;
+	private static readonly List<(string, string)> Trace = new();
 
 	public static void Log(string message)
 	{
-		Fs.Write($"{GetIndent()}[{_className}/{_methodName}] {message}{Environment.NewLine}");
+#if DEBUG
+		var (className, methodName) = Trace.Last();
+		Fs.Write($"{GetIndent()}[{className}/{methodName}] {message}{Environment.NewLine}");
+#endif
 	}
 
 	public static void Begin(string className, string methodName)
 	{
-		_className = className;
-		_methodName = methodName;
-		_deepness++;
-
+		Trace.Add((className, methodName));
 		Log("BEGIN");
 	}
 
 	public static void End()
 	{
 		Log("END");
-
-		_className = string.Empty;
-		_methodName = string.Empty;
-		_deepness--;
+		Trace.RemoveAt(Trace.Count - 1);
 	}
 
 	private static string GetIndent()
 	{
-		if (_deepness == 0)
+		var deepness = Trace.Count;
+
+		if (deepness == 0)
 			return string.Empty;
 
 		var indent = new StringBuilder();
 
-		for (var i = 0; i < _deepness; i++)
+		indent.Append("{");
+		for (var i = 0; i < deepness; i++)
 		{
 			indent.Append(i + 1);
 		}
+		indent.Append("} ");
 
 		return indent.ToString();
 	}
