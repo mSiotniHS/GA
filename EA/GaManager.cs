@@ -34,11 +34,7 @@ public sealed class GaManager<TBaseType>
 		_evaluationStrategy = evaluationStrategy;
 		_pairSelector = modules.PairSelector;
 		_populationGenerator = modules.PopulationGenerator;
-		Statistics = statistics switch
-		{
-			{ } => statistics,
-			null => new StatisticsCommittee()
-		};
+		Statistics = statistics ?? new StatisticsCommittee();
 	}
 
 	public TBaseType FindSolution()
