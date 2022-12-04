@@ -44,8 +44,8 @@ public record Genotype
 		var distance = 0;
 		for (var i = 0; i < Length; i++)
 		{
-			var value = this[i];
-			var otherValue = other[i];
+			var value = GetNonNull(i);
+			var otherValue = other.GetNonNull(i);
 
 			if (value is null || otherValue is null)
 			{
