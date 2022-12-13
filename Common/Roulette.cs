@@ -32,8 +32,5 @@ public static class Roulette
 		throw new UnreachableException($"[{nameof(Roulette)}/{nameof(Spin)}] Случайное число оказалось вне отрезка");
 	}
 
-	public static T Spin<T>(IRng rng, IList<T> items, IList<double> weights)
-	{
-		return Spin(rng, items, weights, out _);
-	}
+	public static T Spin<T>(IRng rng, IList<T> items, IList<double> weights) => Spin(rng, items, weights, out _);
 }

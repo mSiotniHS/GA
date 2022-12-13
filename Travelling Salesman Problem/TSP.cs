@@ -27,11 +27,9 @@ public sealed class Tsp : IGaProblem<Route>, IRandomSolutionGenerator<Route>
 		Criterion = new TspCriterion(distances);
 	}
 
-	public Route PickRandom()
-	{
-		return Enumerable
+	public Route PickRandom() =>
+		Enumerable
 			.Range(0, Distances.CityCount)
 			.OrderBy(_ => _rng.GetInt())
 			.ToList();
-	}
 }
