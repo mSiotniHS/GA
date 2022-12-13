@@ -46,8 +46,6 @@ public sealed class CxCrossover : ICrossover
 		return children;
 	}
 
-	public bool GuaranteesValidGenotype => true;
-
 	private static (int[], int) NumberCycles(int[] preimages, IReadOnlyList<int> images)
 	{
 		var numberedCycles = Enumerable.Repeat(-1, preimages.Length).ToArray();

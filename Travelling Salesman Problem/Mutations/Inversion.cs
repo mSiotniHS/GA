@@ -20,8 +20,6 @@ public sealed class Inversion : IMutation
 		return PurePerform(genotype, startIdx, endIdx);
 	}
 
-	public bool GuaranteesValidGenotype => true;
-
 	// [startIdx, endIdx)
 	private static Genotype PurePerform(Genotype genotype, int startIdx, int endIdx)
 	{

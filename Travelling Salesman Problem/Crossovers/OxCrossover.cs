@@ -70,6 +70,4 @@ public sealed class OxCrossover : ICrossover
 
 		return child;
 	}
-
-	public bool GuaranteesValidGenotype => true;
 }

@@ -30,6 +30,4 @@ public sealed class Saltation : IMutation
 
 		return newGenotype;
 	}
-
-	public bool GuaranteesValidGenotype => true;
 }

@@ -28,6 +28,4 @@ public sealed class PointMutation : IMutation
 
 		return newGenotype;
 	}
-
-	public bool GuaranteesValidGenotype => true;
 }
