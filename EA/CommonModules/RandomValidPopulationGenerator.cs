@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using EA.BaseProblem;
 using EA.Core;
+using EA.Upper;
 
 namespace EA.CommonModules;
 

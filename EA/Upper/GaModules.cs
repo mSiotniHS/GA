@@ -1,6 +1,6 @@
 ﻿using EA.Core;
 
-namespace EA;
+namespace EA.Upper;
 
 public record GaModules(IPopulationGenerator PopulationGenerator, IPairSelector PairSelector, ICrossover Crossover,
 	IMutation Mutation, ISelection Selection)

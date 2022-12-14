@@ -1,4 +1,4 @@
-﻿namespace EA;
+﻿namespace EA.Upper;
 
 public interface IEvaluationStrategy<TBaseType>
 {

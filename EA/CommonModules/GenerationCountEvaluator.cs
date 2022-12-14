@@ -1,4 +1,6 @@
-﻿namespace EA.CommonModules;
+﻿using EA.Upper;
+
+namespace EA.CommonModules;
 
 /// <summary>
 /// Завершает работу ЭГА при достижении

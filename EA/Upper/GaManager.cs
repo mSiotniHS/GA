@@ -5,7 +5,7 @@ using EA.BaseProblem;
 using EA.Core;
 using EA.Helpers;
 
-namespace EA;
+namespace EA.Upper;
 
 public sealed class GaManager<TBaseType>
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using EA.Core;
 
-namespace EA;
+namespace EA.Upper;
 
 public interface IPopulationGenerator
 {
