@@ -46,16 +46,15 @@ internal sealed class GaCore
 		var children = PerformCrossover(parents);
 		Logger.Log($"Получили детей:\n{string.Join('\n', children)}");
 
-		Logger.Log("Проводим мутацию");
-		var mutants = Mutate(children);
-		Logger.Log($"Получили мутантов:\n{string.Join('\n', mutants)}");
-
-
 		if (children.Count == 0)
 		{
 			Logger.Log("Детей не оказалось");
 			return population;
 		}
+
+		Logger.Log("Проводим мутацию");
+		var mutants = Mutate(children);
+		Logger.Log($"Получили мутантов:\n{string.Join('\n', mutants)}");
 
 		var reproductionSet = new List<Genotype>(children.Count + mutants.Count);
 		reproductionSet.AddRange(children);
@@ -113,15 +112,10 @@ internal sealed class GaCore
 		return mutants;
 	}
 
-	private List<Genotype> SelectAndSwap(IReadOnlyCollection<Genotype> population, List<Genotype> fund,
+	private List<Genotype> SelectAndSwap(List<Genotype> population, List<Genotype> fund,
 		Func<Genotype, int> phenotype)
 	{
 		Logger.Begin(nameof(GaCore), nameof(SelectAndSwap));
-
-		if (fund.Count == 0)
-		{
-			throw new ArgumentException("Репродукционное множество не должно быть пустым");
-		}
 
 		Logger.Log($"Получили популяцию:\n{
 			string.Join('\n', population.Zip(population.Select(phenotype), (genotype, phen) => $"*) {genotype} - {phen}"))
@@ -129,6 +123,11 @@ internal sealed class GaCore
 		Logger.Log($"Получили фонд:\n{
 			string.Join('\n', fund.Zip(fund.Select(phenotype), (genotype, phen) => $"*) {genotype} - {phen}"))
 		}");
+
+		if (fund.Count == 0)
+		{
+			return population;
+		}
 
 		var newPopulation = new List<Genotype>(population.Count);
 		var toBeSaved = population.Select(x => new Genotype(x)).ToList();

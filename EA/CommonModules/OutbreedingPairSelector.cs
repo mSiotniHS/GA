@@ -63,11 +63,19 @@ public sealed class OutbreedingPairSelector : IPairSelector
 			Logger.Log($"Добавили пару: {firstParent} и {populationList[furthestIdx]}");
 			Logger.Log($"Расстояние: {furthestDistance}");
 
-			populationList.RemoveAt(firstIdx);
-			populationList.RemoveAt(furthestIdx);
+			if (firstIdx > furthestIdx)
+			{
+				populationList.RemoveAt(firstIdx);
+				populationList.RemoveAt(furthestIdx);
+			}
+			else
+			{
+				populationList.RemoveAt(furthestIdx);
+				populationList.RemoveAt(firstIdx);
+			}
 		}
 
-		Logger.Log("Получили пары:\n" + string.Join('\n', pairs));
+		Logger.Log($"Получили пары:\n{string.Join('\n', pairs)}");
 		Logger.End();
 
 		return pairs;

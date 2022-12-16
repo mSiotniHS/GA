@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Common;
-using EA;
 using EA.CommonModules;
 using EA.Core;
 using EA.Helpers;
+using EA.Upper;
 using Travelling_Salesman_Problem;
 using Travelling_Salesman_Problem.Crossovers;
 using Travelling_Salesman_Problem.Mutations;
@@ -183,6 +183,58 @@ public sealed class TestCases
 		);
 
 		RunTest(ga, runCount, "Селекция");
+	}
+
+	public void Test6(int runCount)
+	{
+		var ga = new GaManager<Route>(
+			Rng,
+			_tsp,
+			new GaParameters(
+				PopulationSize: POPULATION_SIZE,
+				CrossoverRate: CROSSOVER_RATE,
+				MutationRate: MUTATION_RATE,
+				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
+				UseElitistStrategy: DONT_USE_ELITISM),
+			new GaModules(
+				PopulationGenerator: new ProblemSolverPopulationGenerator<Route, Tsp>(
+					_tsp,
+					new RandomizedClosestNeighbourMethod(Rng)),
+				PairSelector: new RandomPairSelector(Rng),
+				Crossover: new OxCrossover(Rng),
+				Mutation: new Inversion(Rng),
+				Selection: new LinearRankScheme(Rng, new WithoutReturnCopy(Rng))),
+			EVALUATION_STRATEGY,
+			new StatisticsCommittee(1, 5)
+		);
+
+		RunTest(ga, runCount, "Мутация + Селекция");
+	}
+
+	public void Test7(int runCount)
+	{
+		var ga = new GaManager<Route>(
+			Rng,
+			_tsp,
+			new GaParameters(
+				PopulationSize: POPULATION_SIZE,
+				CrossoverRate: CROSSOVER_RATE,
+				MutationRate: MUTATION_RATE,
+				GenerationalOverlapRatio: GENERATIONAL_OVERLAP_RATIO,
+				UseElitistStrategy: DONT_USE_ELITISM),
+			new GaModules(
+				PopulationGenerator: new ProblemSolverPopulationGenerator<Route, Tsp>(
+					_tsp,
+					new RandomizedClosestNeighbourMethod(Rng)),
+				PairSelector: new RandomPairSelector(Rng),
+				Crossover: new CxCrossover(),
+				Mutation: new Inversion(Rng),
+				Selection: new BetaTournament(Rng, 2)),
+			EVALUATION_STRATEGY,
+			new StatisticsCommittee(1, 5)
+		);
+
+		RunTest(ga, runCount, "Кроссовер + Мутация");
 	}
 
 	private static void RunTest(GaManager<Route> ga, int runCount, string testName)

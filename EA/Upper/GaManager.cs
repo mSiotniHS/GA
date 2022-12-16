@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Common;
 using EA.BaseProblem;
@@ -69,8 +70,18 @@ public sealed class GaManager<TBaseType>
 			Logger.Log("Проводим итерацию");
 			population = _core.PerformIteration(population, pairs, Phenotype);
 
+			if (population.Count != _core.Parameters.PopulationSize)
+			{
+				throw new UnreachableException("Популяция должна быть неизменной");
+			}
+
 			Statistics.Save(population);
 		}
+
+		Logger.Log("Итого:\n" + string.Join(
+			'\n',
+			population.Zip(population.Select(Phenotype), (genotype, phenotype) => $"*) {genotype} - {phenotype}"))
+		);
 
 		Logger.End();
 
