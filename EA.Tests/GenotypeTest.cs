@@ -1,4 +1,4 @@
-using EA.Core;
+using GA.Core;
 
 namespace EA.Tests;
 
