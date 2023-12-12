@@ -2,7 +2,7 @@
 using GA.Helpers;
 using GA.Upper;
 
-namespace GA.CommonModules;
+namespace GA.CommonModules.EvaluationStrategies;
 
 /// <summary>
 /// Завершает работу ЭГА, если приспособленность лучших особей

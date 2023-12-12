@@ -33,8 +33,8 @@ public record Genotype
 
 	public int GetNonNull(int idx)
 	{
-		if (idx < 0 || idx >= Length)
-			throw new IndexOutOfRangeException();
+		if (idx < 0 || idx >= Length) throw new IndexOutOfRangeException();
+
 		return Genes[idx] ?? throw new Exception(
 			$"[{nameof(Genotype)}/{nameof(GetNonNull)}] Ген под индексом {idx} не определён");
 	}

@@ -1,7 +1,12 @@
-﻿namespace GA.Upper;
+﻿using System.Numerics;
+using GA.BaseProblem;
 
-public interface IEvaluationStrategy<TBaseType>
+namespace GA.Upper;
+
+public interface IEvaluationStrategy<TBase, TNumber, TBaseProblem>
+	where TNumber : INumber<TNumber>
+	where TBaseProblem : IOptimizationProblem<TBase, TNumber>
 {
-	public bool ShouldWork(GaManager<TBaseType> state);
+	public bool ShouldWork(GaManager<TBase, TNumber, TBaseProblem> state);
 	public void Reset();
 }

@@ -4,7 +4,7 @@ using Common;
 using GA.Core;
 using GA.Upper;
 
-namespace GA.CommonModules;
+namespace GA.CommonModules.PairSelectors;
 
 public sealed class RandomPairSelector : IPairSelector
 {

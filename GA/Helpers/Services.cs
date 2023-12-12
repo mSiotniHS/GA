@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 using GA.Core;
 
 namespace GA.Helpers;
 
 public static class Services
 {
-	public static Genotype FindBest(IEnumerable<Genotype> group, Func<Genotype, int> fitnessFunction)
-	{
-		return FindBest(group, fitnessFunction, out _);
-	}
+	public static Genotype FindBest<TNumber>(IEnumerable<Genotype> group, Func<Genotype, TNumber> fitnessFunction)
+		where TNumber : INumber<TNumber> =>
+		FindBest(group, fitnessFunction, out _);
 
-	public static Genotype FindBest(IEnumerable<Genotype> group, Func<Genotype, int> fitnessFunction, out int fitness)
+	public static Genotype FindBest<TNumber>(IEnumerable<Genotype> group, Func<Genotype, TNumber> fitnessFunction, out TNumber fitness)
+		where TNumber : INumber<TNumber>
 	{
 		Genotype? best = null;
-		var bestFitness = int.MaxValue;
+		var bestFitness = TNumber.Zero;
 
 		foreach (var genotype in group)
 		{

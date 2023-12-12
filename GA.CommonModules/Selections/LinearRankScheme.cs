@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Common;
 using GA.Core;
 
-namespace GA.CommonModules;
+namespace GA.CommonModules.Selections;
 
-public sealed class LinearRankScheme : ISelection
+public sealed class LinearRankScheme<TNumber> : ISelection<TNumber>
+	where TNumber : INumber<TNumber>
 {
 	private readonly double _upperBound;
 	private readonly double _lowerBound;
@@ -21,9 +23,9 @@ public sealed class LinearRankScheme : ISelection
 		_copyStrategy = copyStrategy;
 	}
 
-	public IEnumerable<Genotype> Perform(List<Genotype> fund, Func<Genotype, int> phenotype, uint count)
+	public IEnumerable<Genotype> Perform(List<Genotype> fund, Func<Genotype, TNumber> phenotype, uint count)
 	{
-		Logger.Begin(nameof(LinearRankScheme), nameof(Perform));
+		Logger.Begin(nameof(LinearRankScheme<TNumber>), nameof(Perform));
 		Logger.Log($"Нужно выбрать {count} особей");
 		Logger.Log($"Фонд:\n{string.Join('\n', fund)}");
 

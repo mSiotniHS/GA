@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Common;
 using GA.Core;
 using GA.Helpers;
 
-namespace GA.CommonModules;
+namespace GA.CommonModules.Selections;
 
-public sealed class BetaTournament : ISelection
+public sealed class BetaTournament<TNumber> : ISelection<TNumber>
+	where TNumber : INumber<TNumber>
 {
 	private readonly uint _beta;
 	private readonly IRng _rng;
@@ -16,14 +18,14 @@ public sealed class BetaTournament : ISelection
 		if (beta < 2)
 		{
 			throw new ArgumentOutOfRangeException(
-				nameof(beta), $"[{nameof(BetaTournament)}/cons] Параметр Beta должен быть больше единицы");
+				nameof(beta), $"[{nameof(BetaTournament<TNumber>)}/cons] Параметр Beta должен быть больше единицы");
 		}
 
 		_rng = rng;
 		_beta = beta;
 	}
 
-	public IEnumerable<Genotype> Perform(List<Genotype> fund, Func<Genotype, int> phenotype, uint count)
+	public IEnumerable<Genotype> Perform(List<Genotype> fund, Func<Genotype, TNumber> phenotype, uint count)
 	{
 		for (var selectedCount = 0; selectedCount < count; selectedCount++)
 		{
@@ -31,7 +33,7 @@ public sealed class BetaTournament : ISelection
 		}
 	}
 
-	private Genotype Round(IReadOnlyList<Genotype> fund, Func<Genotype, int> phenotype)
+	private Genotype Round(IReadOnlyList<Genotype> fund, Func<Genotype, TNumber> phenotype)
 	{
 		var fighters = new List<Genotype>();
 		// не нужно ли добавить && i < fund.Count?

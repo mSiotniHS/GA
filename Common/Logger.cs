@@ -14,7 +14,7 @@ public static class Logger
 
 	public static void Log(string message)
 	{
-#if DEBUG
+#if false
 		var (className, methodName) = Trace.Last();
 		Fs.Write($"{GetIndent()}[{className}/{methodName}] {message}{Environment.NewLine}");
 #endif

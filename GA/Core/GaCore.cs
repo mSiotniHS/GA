@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Common;
 using GA.Helpers;
 
 namespace GA.Core;
 
-internal sealed class GaCore
+internal sealed class GaCore<TNumber> : IGaIteration
+	where TNumber : INumber<TNumber>
 {
 	private static readonly bool[] Items = {true, false};
 	private readonly double[] _mutationWeights;
@@ -17,10 +19,19 @@ internal sealed class GaCore
 
 	private readonly ICrossover _crossover;
 	private readonly IMutation _mutation;
-	private readonly ISelection _selection;
+	private readonly ISelection<TNumber> _selection;
+
+	private readonly PhenotypeCalculator<TNumber> _phenotype;
+
 	public GaParameters Parameters { get; }
 
-	public GaCore(IRng rng, GaParameters parameters, ICrossover crossover, IMutation mutation, ISelection selection)
+	public GaCore(
+		IRng rng,
+		GaParameters parameters,
+		ICrossover crossover,
+		IMutation mutation,
+		ISelection<TNumber> selection,
+		PhenotypeCalculator<TNumber> phenotype)
 	{
 		_rng = rng;
 
@@ -28,17 +39,17 @@ internal sealed class GaCore
 		_crossover = crossover;
 		_mutation = mutation;
 		_selection = selection;
+		_phenotype = phenotype;
 
 		_mutationWeights = new[] {Parameters.MutationRate, 1 - Parameters.MutationRate};
 		_crossoverWeights = new[] {Parameters.CrossoverRate, 1 - Parameters.CrossoverRate};
 
-		_newcomerCount = Convert.ToUInt32(Parameters.PopulationSize * Parameters.GenerationalOverlapRatio);
+		_newcomerCount = (uint) (Parameters.PopulationSize * Parameters.GenerationalOverlapRatio);
 	}
 
-	public List<Genotype> PerformIteration(List<Genotype> population, List<(Genotype, Genotype)> parents,
-		Func<Genotype, int> phenotype)
+	public List<Genotype> PerformIteration(List<Genotype> population, List<(Genotype, Genotype)> parents)
 	{
-		Logger.Begin(nameof(GaCore), nameof(PerformIteration));
+		// Logger.Begin(nameof(GaCore), nameof(PerformIteration));
 		Logger.Log($"Получили популяцию:\n{string.Join('\n', population)}");
 		Logger.Log($"Получили пары родителей:\n{string.Join('\n', parents)}");
 
@@ -64,12 +75,12 @@ internal sealed class GaCore
 		Logger.Log("Переход к селекции");
 		Logger.End();
 
-		return SelectAndSwap(population, reproductionSet, phenotype);
+		return SelectAndSwap(population, reproductionSet);
 	}
 
 	private List<Genotype> PerformCrossover(List<(Genotype, Genotype)> parents)
 	{
-		Logger.Begin(nameof(GaCore), nameof(PerformCrossover));
+		// Logger.Begin(nameof(GaCore), nameof(PerformCrossover));
 		Logger.Log($"Получили пары родителей:\n{string.Join('\n', parents)}");
 
 		var children = new List<Genotype>();
@@ -92,7 +103,7 @@ internal sealed class GaCore
 
 	private List<Genotype> Mutate(List<Genotype> children)
 	{
-		Logger.Begin(nameof(GaCore), nameof(Mutate));
+		// Logger.Begin(nameof(GaCore), nameof(Mutate));
 		Logger.Log($"Получили детей:\n{string.Join('\n', children)}");
 
 		var mutants = new List<Genotype>();
@@ -112,16 +123,15 @@ internal sealed class GaCore
 		return mutants;
 	}
 
-	private List<Genotype> SelectAndSwap(List<Genotype> population, List<Genotype> fund,
-		Func<Genotype, int> phenotype)
+	private List<Genotype> SelectAndSwap(List<Genotype> population, List<Genotype> fund)
 	{
-		Logger.Begin(nameof(GaCore), nameof(SelectAndSwap));
+		// Logger.Begin(nameof(GaCore), nameof(SelectAndSwap));
 
 		Logger.Log($"Получили популяцию:\n{
-			string.Join('\n', population.Zip(population.Select(phenotype), (genotype, phen) => $"*) {genotype} - {phen}"))
+			string.Join('\n', population.Zip(population.Select(_phenotype), (genotype, phen) => $"*) {genotype} - {phen}"))
 		}");
 		Logger.Log($"Получили фонд:\n{
-			string.Join('\n', fund.Zip(fund.Select(phenotype), (genotype, phen) => $"*) {genotype} - {phen}"))
+			string.Join('\n', fund.Zip(fund.Select(_phenotype), (genotype, phen) => $"*) {genotype} - {phen}"))
 		}");
 
 		if (fund.Count == 0)
@@ -139,13 +149,13 @@ internal sealed class GaCore
 		{
 			Logger.Log("Используем элитарную стратегию");
 
-			var bestParent = Services.FindBest(toBeSaved, phenotype);
-			var bestChild = Services.FindBest(fund, phenotype);
+			var bestParent = Services.FindBest(toBeSaved, _phenotype);
+			var bestChild = Services.FindBest(fund, _phenotype);
 
 			Logger.Log($"Лучший родитель: {bestParent}");
 			Logger.Log($"Лучший потомок: {bestChild}");
 
-			if (phenotype(bestChild) <= phenotype(bestParent))
+			if (_phenotype(bestChild) <= _phenotype(bestParent))
 			{
 				Logger.Log("Приспособленность ребёнка лучше, чем у родителя");
 
@@ -153,7 +163,7 @@ internal sealed class GaCore
 				fund.Remove(bestChild);
 
 				Logger.Log($"Проводим селекцию, всего должно быть {newcomerCount - 1} выживших");
-				survivors = _selection.Perform(fund, phenotype, newcomerCount - 1).ToList();
+				survivors = _selection.Perform(fund, _phenotype, newcomerCount - 1).ToList();
 			}
 			else
 			{
@@ -163,7 +173,7 @@ internal sealed class GaCore
 				toBeSaved.Remove(bestParent);
 
 				Logger.Log($"Проводим селекцию, всего должно быть {newcomerCount} выживших");
-				survivors = _selection.Perform(fund, phenotype, newcomerCount).ToList();
+				survivors = _selection.Perform(fund, _phenotype, newcomerCount).ToList();
 			}
 		}
 		else
@@ -171,7 +181,7 @@ internal sealed class GaCore
 			Logger.Log("Не используем элитарную стратегию");
 			Logger.Log("Проводим селекцию");
 
-			survivors = _selection.Perform(fund, phenotype, newcomerCount).ToList();
+			survivors = _selection.Perform(fund, _phenotype, newcomerCount).ToList();
 		}
 		Logger.Log($"Получили выживших:\n{string.Join('\n', survivors)}");
 

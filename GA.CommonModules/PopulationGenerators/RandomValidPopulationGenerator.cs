@@ -3,10 +3,10 @@ using GA.BaseProblem;
 using GA.Core;
 using GA.Upper;
 
-namespace GA.CommonModules;
+namespace GA.CommonModules.PopulationGenerators;
 
 public sealed class RandomValidPopulationGenerator<TBaseType, TBaseProblem> : IPopulationGenerator
-	where TBaseProblem : IGaProblem<TBaseType>, IRandomSolutionGenerator<TBaseType>
+	where TBaseProblem : IGaOptimizationProblem<TBaseType>, IRandomSolutionGenerator<TBaseType>
 {
 	private readonly TBaseProblem _baseProblem;
 

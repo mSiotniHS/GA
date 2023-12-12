@@ -1,6 +1,6 @@
 using GA.Core;
 
-namespace EA.Tests;
+namespace GA.Tests;
 
 public sealed class GenotypeTest
 {
@@ -17,6 +17,6 @@ public sealed class GenotypeTest
 		yield return new object[] { new int?[] {1, 4, 3, 2}, 4 };
 		yield return new object[] { new int?[] {1, 4, 2}, 3 };
 		yield return new object[] { new int?[] {1, 4, 2, 4, 1}, 5 };
-		yield return new object[] { new int?[] { }, 0 };
+		yield return new object[] { Array.Empty<int?>(), 0 };
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GA.Core;
 
-namespace EA;
+namespace GA;
 
 public interface ICopyStrategy
 {

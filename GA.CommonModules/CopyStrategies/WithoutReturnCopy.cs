@@ -3,7 +3,7 @@ using System.Linq;
 using Common;
 using GA.Core;
 
-namespace GA.CommonModules;
+namespace GA.CommonModules.CopyStrategies;
 
 public sealed class WithoutReturnCopy : ICopyStrategy
 {

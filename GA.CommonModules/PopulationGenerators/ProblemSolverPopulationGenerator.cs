@@ -3,10 +3,10 @@ using GA.BaseProblem;
 using GA.Core;
 using GA.Upper;
 
-namespace GA.CommonModules;
+namespace GA.CommonModules.PopulationGenerators;
 
 public sealed class ProblemSolverPopulationGenerator<TBaseType, TBaseProblem> : IPopulationGenerator
-	where TBaseProblem : IGaProblem<TBaseType>
+	where TBaseProblem : IGaOptimizationProblem<TBaseType>
 {
 	private readonly TBaseProblem _baseProblem;
 	private readonly IProblemSolver<TBaseType, TBaseProblem> _problemSolver;

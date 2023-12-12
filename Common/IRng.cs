@@ -1,9 +1,11 @@
 ﻿namespace Common;
 
+/// <summary>
+/// Интерфейс задаёт общий вид класса,
+/// генерирующего случайные числа.
+/// </summary>
 public interface IRng
 {
-	public int GetInt();
-
 	/// <param name="max">Не включительно</param>
 	/// <returns>int в [0, max)</returns>
 	public int GetInt(int max);
@@ -13,6 +15,6 @@ public interface IRng
 	/// <returns>int в [min, max)</returns>
 	public int GetInt(int min, int max);
 
-	/// <returns>double в [0, 1)</returns>
+	/// <returns>Число типа double в промежутке [0, 1)</returns>
 	public double GetDouble();
 }
