@@ -25,7 +25,7 @@ public sealed class BetaTournament<TNumber> : ISelection<TNumber>
 		_beta = beta;
 	}
 
-	public IEnumerable<Genotype> Perform(List<Genotype> fund, Func<Genotype, TNumber> phenotype, uint count)
+	public IEnumerable<Genotype> Perform(List<Genotype> fund, PhenotypeCalculator<TNumber> phenotype, uint count)
 	{
 		for (var selectedCount = 0; selectedCount < count; selectedCount++)
 		{
@@ -33,7 +33,7 @@ public sealed class BetaTournament<TNumber> : ISelection<TNumber>
 		}
 	}
 
-	private Genotype Round(IReadOnlyList<Genotype> fund, Func<Genotype, TNumber> phenotype)
+	private Genotype Round(IReadOnlyList<Genotype> fund, PhenotypeCalculator<TNumber> phenotype)
 	{
 		var fighters = new List<Genotype>();
 		// не нужно ли добавить && i < fund.Count?

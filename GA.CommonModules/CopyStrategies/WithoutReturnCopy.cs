@@ -5,16 +5,9 @@ using GA.Core;
 
 namespace GA.CommonModules.CopyStrategies;
 
-public sealed class WithoutReturnCopy : ICopyStrategy
+public sealed class WithoutReturnCopy(IRng rng) : ICopyStrategy
 {
-	private readonly IRng _rng;
-
-	public WithoutReturnCopy(IRng rng)
-	{
-		_rng = rng;
-	}
-
-	public IEnumerable<Genotype> Copy(IList<Genotype> fund, IList<double> weights, uint count)
+    public IEnumerable<Genotype> Copy(IList<Genotype> fund, IList<double> weights, uint count)
 	{
 		Logger.Begin(nameof(WithoutReturnCopy), nameof(Copy));
 		Logger.Log($"Особи и веса:\n{string.Join('\n', fund.Zip(weights, (w, f) => $"*) {w} - {f}"))}");
@@ -24,7 +17,7 @@ public sealed class WithoutReturnCopy : ICopyStrategy
 
 		for (var i = 0; i < count; i++)
 		{
-			yield return Roulette.Spin(_rng, copiedFund, copiedWeights, out var idx);
+			yield return Roulette.Spin(rng, copiedFund, copiedWeights, out var idx);
 			Logger.Log($"Выбрали {copiedFund[idx]}");
 
 			copiedFund.RemoveAt(idx);

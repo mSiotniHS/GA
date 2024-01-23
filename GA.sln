@@ -1,14 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GA", "GA\GA.csproj", "{A36E6E1E-7408-4418-B9D9-A57E109E5FA3}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GA", "GA\GA.csproj", "{A36E6E1E-7408-4418-B9D9-A57E109E5FA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{61801F69-00F0-44FA-A4CF-45F4A922B839}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{61801F69-00F0-44FA-A4CF-45F4A922B839}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{44CE0706-CB73-41E9-B5AA-585F2E34ED72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GA.Tests", "GA.Tests\GA.Tests.csproj", "{975E038F-C62B-4B91-ADD1-DB72D81FFA31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GA.Tests", "GA.Tests\GA.Tests.csproj", "{975E038F-C62B-4B91-ADD1-DB72D81FFA31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GA.CommonModules", "GA.CommonModules\GA.CommonModules.csproj", "{C982ED2F-2142-4B74-978D-A2F0A9FAEA57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GA.CommonModules", "GA.CommonModules\GA.CommonModules.csproj", "{C982ED2F-2142-4B74-978D-A2F0A9FAEA57}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GraphColoring", "GraphColoringProblem\GraphColoring.csproj", "{7CA1DE9D-9C2F-4A84-945A-BC9E8ED1EB69}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OptimizationProblemsFramework", "OptimizationProblemsFramework\OptimizationProblemsFramework.csproj", "{97553C1E-0586-47DE-910A-A5FEA28C38C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App", "App\App.csproj", "{5A2804F3-5B04-492B-98F8-A9302F558991}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,8 +41,26 @@ Global
 		{C982ED2F-2142-4B74-978D-A2F0A9FAEA57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C982ED2F-2142-4B74-978D-A2F0A9FAEA57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C982ED2F-2142-4B74-978D-A2F0A9FAEA57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CA1DE9D-9C2F-4A84-945A-BC9E8ED1EB69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CA1DE9D-9C2F-4A84-945A-BC9E8ED1EB69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CA1DE9D-9C2F-4A84-945A-BC9E8ED1EB69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CA1DE9D-9C2F-4A84-945A-BC9E8ED1EB69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97553C1E-0586-47DE-910A-A5FEA28C38C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97553C1E-0586-47DE-910A-A5FEA28C38C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97553C1E-0586-47DE-910A-A5FEA28C38C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97553C1E-0586-47DE-910A-A5FEA28C38C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A2804F3-5B04-492B-98F8-A9302F558991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A2804F3-5B04-492B-98F8-A9302F558991}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A2804F3-5B04-492B-98F8-A9302F558991}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A2804F3-5B04-492B-98F8-A9302F558991}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{975E038F-C62B-4B91-ADD1-DB72D81FFA31} = {44CE0706-CB73-41E9-B5AA-585F2E34ED72}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C7339BE-EAE7-4B86-898F-FA6F8475873C}
 	EndGlobalSection
 EndGlobal

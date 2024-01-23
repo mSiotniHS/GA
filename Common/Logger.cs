@@ -22,17 +22,21 @@ public static class Logger
 
 	public static void Begin(string className, string methodName)
 	{
+#if false
 		Trace.Add((className, methodName));
 		Log("BEGIN");
-	}
+#endif
+    }
 
-	public static void End()
+    public static void End()
 	{
+#if false
 		Log("END");
 		Trace.RemoveAt(Trace.Count - 1);
-	}
+#endif
+    }
 
-	private static string GetIndent()
+    private static string GetIndent()
 	{
 		var deepness = Trace.Count;
 

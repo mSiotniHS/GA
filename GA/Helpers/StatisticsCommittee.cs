@@ -15,7 +15,7 @@ public sealed class StatisticsCommittee
 
 	public StatisticsCommittee(uint savingFrequency = 1, uint maxTraceLength = uint.MaxValue)
 	{
-		Trace = new List<List<Genotype>>();
+		Trace = [];
 
 		_savingFrequency = savingFrequency;
 		_maxTraceLength = maxTraceLength;

@@ -1,5 +1,5 @@
 ﻿using System.Numerics;
-using GA.BaseProblem;
+using OptimizationProblemsFramework;
 using GA.Upper;
 
 namespace GA.CommonModules.EvaluationStrategies;
@@ -11,7 +11,7 @@ namespace GA.CommonModules.EvaluationStrategies;
 /// <typeparam name="TBase"></typeparam>
 /// <typeparam name="TNumber"></typeparam>
 /// <typeparam name="TBaseProblem"></typeparam>
-public sealed class GenerationCountEvaluator<TBase, TNumber, TBaseProblem> : IEvaluationStrategy<TBase, TNumber, TBaseProblem>
+public sealed class GenerationCountEvaluator<TBaseProblem, TBase, TNumber> : IEvaluationStrategy<TBaseProblem, TBase, TNumber>
 	where TNumber : INumber<TNumber>
 	where TBaseProblem : IOptimizationProblem<TBase, TNumber>
 {
@@ -22,7 +22,7 @@ public sealed class GenerationCountEvaluator<TBase, TNumber, TBaseProblem> : IEv
 		_maxGenerations = maxGenerations;
 	}
 
-	public bool ShouldWork(GaManager<TBase, TNumber, TBaseProblem> state)
+	public bool ShouldWork(GaManager<TBaseProblem, TBase, TNumber> state)
 	{
 		return _maxGenerations != state.Statistics.TotalGenerationCount;
 	}

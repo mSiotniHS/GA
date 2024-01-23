@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using Common;
@@ -23,14 +22,14 @@ public sealed class LinearRankScheme<TNumber> : ISelection<TNumber>
 		_copyStrategy = copyStrategy;
 	}
 
-	public IEnumerable<Genotype> Perform(List<Genotype> fund, Func<Genotype, TNumber> phenotype, uint count)
+	public IEnumerable<Genotype> Perform(List<Genotype> fund, PhenotypeCalculator<TNumber> phenotype, uint count)
 	{
 		Logger.Begin(nameof(LinearRankScheme<TNumber>), nameof(Perform));
 		Logger.Log($"Нужно выбрать {count} особей");
 		Logger.Log($"Фонд:\n{string.Join('\n', fund)}");
 
 		// первый --- наиболее приспособленный
-		var sorted = fund.OrderBy(phenotype).ToList();
+		var sorted = fund.OrderBy(phenotype.Invoke).ToList();
 		var weights = Enumerable
 			.Range(0, fund.Count)
 			.Select(i => ExpectedCopyCount(i, fund.Count))

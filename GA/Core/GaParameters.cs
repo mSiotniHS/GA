@@ -17,7 +17,7 @@ public record GaParameters(
 
 	/// <summary>
 	/// Вероятность, с которой пройзойдёт мутация конкретной особи.
-	///<remarks>
+	/// <remarks>
 	/// Принимает значение от 0 до 1.
 	/// </remarks>
 	/// </summary>

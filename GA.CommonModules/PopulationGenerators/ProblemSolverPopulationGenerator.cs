@@ -1,27 +1,25 @@
 ﻿using System.Collections.Generic;
-using GA.BaseProblem;
+using OptimizationProblemsFramework;
 using GA.Core;
 using GA.Upper;
+using System.Numerics;
+using GA.BaseProblem;
 
 namespace GA.CommonModules.PopulationGenerators;
 
-public sealed class ProblemSolverPopulationGenerator<TBaseType, TBaseProblem> : IPopulationGenerator
-	where TBaseProblem : IGaOptimizationProblem<TBaseType>
+public sealed class ProblemSolverPopulationGenerator<TBaseProblem, TBaseType, TNumber>(
+        TBaseProblem baseProblem,
+        IProblemSolver<TBaseProblem, TBaseType, TNumber> problemSolver,
+        IGaEncoder<TBaseType> encoder
+    ) : IPopulationGenerator
+	where TBaseProblem : IOptimizationProblem<TBaseType, TNumber>
+	where TNumber : INumber<TNumber>
 {
-	private readonly TBaseProblem _baseProblem;
-	private readonly IProblemSolver<TBaseType, TBaseProblem> _problemSolver;
-
-	public ProblemSolverPopulationGenerator(TBaseProblem baseProblem, IProblemSolver<TBaseType, TBaseProblem> problemSolver)
-	{
-		_baseProblem = baseProblem;
-		_problemSolver = problemSolver;
-	}
-
-	public IEnumerable<Genotype> Generate(int count)
+    public IEnumerable<Genotype> Generate(int count)
 	{
 		for (var i = 0; i < count; i++)
 		{
-			yield return _baseProblem.Coder.Encode(_problemSolver.FindSolution(_baseProblem));
+			yield return encoder.Encode(problemSolver.FindSolution(baseProblem));
 		}
 	}
 }

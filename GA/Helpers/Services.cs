@@ -8,11 +8,11 @@ namespace GA.Helpers;
 
 public static class Services
 {
-	public static Genotype FindBest<TNumber>(IEnumerable<Genotype> group, Func<Genotype, TNumber> fitnessFunction)
+	public static Genotype FindBest<TNumber>(IEnumerable<Genotype> group, PhenotypeCalculator<TNumber> fitnessFunction)
 		where TNumber : INumber<TNumber> =>
 		FindBest(group, fitnessFunction, out _);
 
-	public static Genotype FindBest<TNumber>(IEnumerable<Genotype> group, Func<Genotype, TNumber> fitnessFunction, out TNumber fitness)
+	public static Genotype FindBest<TNumber>(IEnumerable<Genotype> group, PhenotypeCalculator<TNumber> fitnessFunction, out TNumber fitness)
 		where TNumber : INumber<TNumber>
 	{
 		Genotype? best = null;

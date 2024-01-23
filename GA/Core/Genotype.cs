@@ -75,10 +75,7 @@ public record Genotype
 		return new Genotype(genes);
 	}
 
-	public bool Contains(int gene)
-	{
-		return ContainsIn(gene, 0, Length);
-	}
+	public bool Contains(int gene) => ContainsIn(gene, 0, Length);
 
 	// interval: [start, end)
 	public bool ContainsIn(int gene, int start, int end)

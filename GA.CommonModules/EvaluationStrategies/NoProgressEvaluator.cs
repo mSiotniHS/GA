@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Numerics;
 using GA.Helpers;
 using GA.Upper;
+using OptimizationProblemsFramework;
 
 namespace GA.CommonModules.EvaluationStrategies;
 
@@ -9,26 +12,29 @@ namespace GA.CommonModules.EvaluationStrategies;
 /// "n" поколений не улучшается
 /// </summary>
 /// <typeparam name="TBaseType"></typeparam>
-public sealed class NoProgressEvaluator<TBaseType> : IEvaluationStrategy<TBaseType>
+public sealed class NoProgressEvaluator<TBaseProblem, TBase, TNumber> : IEvaluationStrategy<TBaseProblem, TBase, TNumber>
+    where TNumber : struct, INumber<TNumber>
+    where TBaseProblem : IOptimizationProblem<TBase, TNumber>
 {
 	private readonly uint _maxNoProgressCount;
 	private uint _noProgressCount;
-	private int _lastBestFitness;
+	private TNumber? _lastBestFitness;
 
 	public NoProgressEvaluator(uint maxNoProgressCount)
 	{
 		_maxNoProgressCount = maxNoProgressCount;
-		_noProgressCount = 0;
-		_lastBestFitness = int.MaxValue;
+
+		Reset();
 	}
 
-	public bool ShouldWork(GaManager<TBaseType> state)
+	public bool ShouldWork(GaManager<TBaseProblem, TBase, TNumber> state)
 	{
 		if (state.Statistics.Trace.Count == 0) return true;
 
 		if (state.Statistics.Trace.Count == 1)
 		{
-			Services.FindBest(state.Statistics.Trace[0], state.Phenotype, out _lastBestFitness);
+			Services.FindBest(state.Statistics.Trace[0], state.Phenotype, out var fitness);
+			_lastBestFitness = fitness;
 			return true;
 		}
 
@@ -47,7 +53,7 @@ public sealed class NoProgressEvaluator<TBaseType> : IEvaluationStrategy<TBaseTy
 
 	public void Reset()
 	{
-		_lastBestFitness = int.MaxValue;
+		_lastBestFitness = null;
 		_noProgressCount = 0;
 	}
 }
